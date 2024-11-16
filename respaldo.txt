@@ -1,0 +1,93 @@
+
+    <!-- Sidebar del carrito -->
+    <div id="cart-sidebar" class="cart-sidebar offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="cart-header">
+            <h5>Carrito</h5>
+            <button class="close-button" onclick="toggleCartSidebar()">&times;</button>
+        </div>
+        <div class="cart-content">
+            <div id="cart-items-container"></div>
+            <p>Total: $<span id="total">0.00</span></p>
+            <form id="pedido-form">
+                <h3>Datos del pedido</h3>
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" id="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label>Teléfono:</label>
+                    <input type="tel" id="telefono" required>
+                </div>
+                <div class="form-group">
+                    <label>Dirección:</label>
+                    <input type="text" id="direccion" required>
+                </div>
+                <div class="form-group">
+                    <label>Entrega:</label>
+                    <select id="tipo-entrega" required>
+                        <option value="Domicilio">Domicilio</option>
+                        <option value="Retiro en local">Retiro en local</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="metodoPago">Método de Pago:</label>
+                    <select id="metodopago" required onchange="actualizarPrecio()">
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Tarjeta">Tarjeta</option>
+                        <option value="Transferencia">Transferencia</option>
+                    </select>
+                </div>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="condiciones" required>
+                    <a href="/terminos&condiciones" target="_blank">Aceptación de términos y condiciones</a>
+                </div>
+                <div class="form-group">
+                    <label>Comentario:</label>
+                    <textarea id="comentario"></textarea>
+                </div>
+                <button class="btn btn-success" onclick="enviarPedido()">Enviar Pedido</button>
+            </form>
+        </div>
+    </div>
+    <!--Fin Sidebar del carrito -->
+
+      .cart-sidebar {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+  }
+  
+  .cart-sidebar.show {
+    right: 0;
+  }
+  
+  .cart-header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .cart-content {
+    padding: 20px;
+  }
+  
+  .cart-footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    text-align: center;
+  }
+  
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .cart-item button {
+    margin: 0 5px;
+  }
+
+  

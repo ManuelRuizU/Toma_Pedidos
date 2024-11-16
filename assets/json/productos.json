@@ -1,0 +1,147 @@
+
+{
+  "categorias": [
+      {
+          "id": "e506d525-cfd1-4165-a215-4805e4c662c4",
+          "imagen": "assets/img/logo/imagen.jpg",
+          "nombre": "Promociones",
+          "subcategorias": [
+              {
+                  "id": "df415af2-57d1-4d43-8f13-bbcfa3e5649d",
+                  "nombre": "Promos del Chef",
+                  "productos": [
+                      {
+                          "id": "7cee897a-0bc2-415c-bcd3-4d4b1144f839",
+                          "nombre": "40 del Chef",
+                          "descripcion": "40 piezas del Chef",
+                          "precioEfectivo": 11000,
+                          "precioTransferenciaTarjeta": 13000,
+                          "foto": "assets/img/productos/piezas.webp"
+                      },
+                      {
+                          "id": "6693604c-efc5-49cd-96f7-2672e6ae016b",
+                          "nombre": "60 del Chef",
+                          "descripcion": "60 piezas del Chef",
+                          "precioEfectivo": 14000,
+                          "precioTransferenciaTarjeta": 16000,
+                          "foto": "assets/img/productos/piezas.webp"
+                      }
+                  ]
+              },
+              {
+                  "id": "343be020-217e-4e16-9ae9-5335ccfa71b9",
+                  "nombre": "Promos VIP",
+                  "productos": [
+                      {
+                          "id": "f80a943f-7357-4972-9945-1c3136d6167e",
+                          "nombre": "50 VIP",
+                          "descripcion": "50 piezas VIP",
+                          "precioEfectivo": 15000,
+                          "precioTransferenciaTarjeta": 17000,
+                          "foto": "assets/img/productos/piezas.webp"
+                      },
+                      {
+                          "id": "a38ae437-825c-4b4e-a6f2-797d791fd6b1",
+                          "nombre": "70 VIP",
+                          "descripcion": "70 piezas VIP",
+                          "precioEfectivo": 18000,
+                          "precioTransferenciaTarjeta": 20000,
+                          "foto": "assets/img/productos/piezas.webp"
+                      }
+                  ]
+              },
+              {
+                  "id": "8b7317a2-139d-41a0-a4c9-a8a0c3d00240",
+                  "nombre": "Promos Premium",
+                  "productos": [
+                      {
+                          "id": "4ce112a6-5e9c-49b7-a919-d17f736f3d05",
+                          "nombre": "100 Premium",
+                          "descripcion": "100 piezas Premium",
+                          "precioEfectivo": 25000,
+                          "precioTransferenciaTarjeta": 30000,
+                          "foto": "assets/img/productos/piezas.webp"
+                      }
+                  ]
+              }
+          ]
+      },
+      {
+          "id": "b906332a-99f7-4792-a334-e340e61d99b8",
+          "imagen": "assets/img/logo/imagen.jpg",
+          "nombre": "Rolls",
+          "subcategorias": [
+              {
+                  "id": "d2862c72-a2ed-461d-8e1f-1a7d6471dc1c",
+                  "nombre": "Rolls clásicos",
+                  "productos": [
+                      {
+                          "id": "ac7ffe4b-de3e-46d6-9d3d-b26023049d3b",
+                          "nombre": "Rollito de salmón",
+                          "descripcion": "Rollito de salmón",
+                          "precioEfectivo": 5000,
+                          "precioTransferenciaTarjeta": 9000,
+                          "foto": "assets/img/productos/piezas.webp"
+                      }
+                  ]
+              },
+              {
+                  "id": "9e7a43e6-3d88-4382-9826-33056232d856",
+                  "nombre": "Rolls especiales",
+                  "productos": [
+                      {
+                          "id": "b906332a-55f7-4792-a334-e340e61d27b8",
+                          "nombre": "Rollito de langostinos",
+                          "descripcion": "Rollito de langostinos",
+                          "precioEfectivo": 8000,
+                          "precioTransferenciaTarjeta": 12000,
+                          "foto": "assets/img/productos/piezas.webp"
+                      }
+                  ]
+              }
+          ]
+      },
+      {
+          "id": "936da01f-9abd-4d9d-80c7-02af85c933z7",
+          "imagen": "assets/img/logo/imagen.jpg",
+          "nombre": "Extras",
+          "subcategorias": [
+              {
+                  "id": "afb5f126-33f1-48b8-9041-f5763d4b05eb",
+                  "nombre": "Soyas",
+                  "productos": [
+                      {
+                          "id": "w901973a-55f7-1492-x343-a034a61d72y8",
+                          "nombre": "Soya 3oz",
+                          "descripcion": "Soya 3oz",
+                          "precioEfectivo": 800,
+                          "precioTransferenciaTarjeta": 1000,
+                          "foto": "assets/img/productos/piezas.webp"
+                      }
+                  ]
+              }
+          ]
+      },
+      {
+          "id": "f80a943f-7357-4972-9945-1b3136d9354e",
+          "imagen": "assets/img/logo/imagen.jpg",
+          "nombre": "Bebestibles",
+          "subcategorias": [
+              {
+                  "id": "z906332a-55z7-4792-z334-z340z61z27b1",
+                  "nombre": "Jugos",
+                  "productos": [
+                      {
+                          "id": "936da01f-9abd-4d9d-80c7-02ah57c992z0",
+                          "nombre": "Jugo de naranja",
+                          "descripcion": "Jugo de naranja",
+                          "precioEfectivo": 2000,
+                          "precioTransferenciaTarjeta": 5000,
+                          "foto": "assets/img/productos/piezas.webp"
+                      }
+                  ]
+              }
+          ]
+      }
+  ]
+}
