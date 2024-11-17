@@ -114,6 +114,7 @@ body {
     max-width: 100%;
     height: auto;
   }
+
   
   .cart-button {
     position: fixed;
@@ -326,6 +327,37 @@ body {
       width: 70%;
     }
   }
+
+/* Botón Vaciar Carrito */
+.btn-vaciar {
+  background-color: #ff4d4d; /* Rojo claro */
+  color: white;
+  border: 1px solid #ff0000;
+  font-weight: bold;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.btn-vaciar:hover {
+  background-color: #ff1a1a; /* Rojo más intenso */
+  transform: scale(1.05); /* Efecto de agrandamiento */
+}
+
+/* Botón Enviar Pedido */
+.btn-enviar {
+  background-color: #4caf50; /* Verde estándar */
+  color: white;
+  border: 1px solid #3e8e41;
+  font-weight: bold;
+  box-shadow: 0px 4px 8px rgba(0, 128, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.btn-enviar:hover {
+  background-color: #45a049; /* Verde más oscuro */
+  transform: translateY(-2px); /* Efecto de elevación */
+  box-shadow: 0px 8px 16px rgba(0, 128, 0, 0.3);
+}
+
 
 /* Estilo para el botón cuando hay productos */
 #cart-button.has-items {

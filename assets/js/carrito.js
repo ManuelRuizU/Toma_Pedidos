@@ -32,6 +32,9 @@ updateCartStatus(); // Actualiza el estado del carrito a vacío
 
 
 
+
+
+
 // Cargar los datos del archivo productos.json y actualizar el precio según el método de pago
 async function cargarProductos() {
   try {
@@ -130,7 +133,18 @@ async function actualizarPrecio() {
 await renderCart(); // Llama a renderCart para que se actualicen tanto los precios unitarios como el total
 }
 
+function limpiarCarrito() {
+  // Eliminar los productos del carrito del localStorage
+  localStorage.removeItem('carrito');
 
+  // Actualizar la visualización del carrito
+  renderCart();
+
+  // Actualizar el estado del carrito (íconos, botones, etc.)
+  checkCartAndUpdate();
+
+  console.log('El carrito ha sido limpiado.');
+}
 
 
 
@@ -163,6 +177,8 @@ window.agregarAlCarrito = agregarAlCarrito;
 window.actualizarPrecio = actualizarPrecio;  // Asegúrate de que actualizarPrecio esté en el global
 window.enviarPedido = enviarPedido; // Para la función de envío
 window.updateQuantity = updateQuantity;
+window.limpiarCarrito = limpiarCarrito;
+
 
 // Inicializar eventos
 document.addEventListener('DOMContentLoaded', () => {
