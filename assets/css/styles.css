@@ -72,27 +72,26 @@ body {
   transition: transform 0.2s; /* Transición suave */
 }
 
+/* Estilo para botón de carrito personalizado */
+.cart-button {
+  background-color: orangered; /* Color de fondo naranjo */
+  border: none; /* Elimina el borde */
+  color: #ffffff; /* Color del texto blanco */
+  padding: 10px; /* Espacio interior */
+  border-radius: 50%; /* Forma circular */
+  transition: transform 0.3s ease-in-out; /* Transición suave */
+}
 
+.cart-button:hover {
+  transform: scale(1.1); /* Efecto de escala en hover */
+}
+
+.cart-button i {
+  color: #ffffff; /* Color del icono blanco */
+  font-size: 24px; /* Tamaño del icono */
+}
   
-  .btn-outline-success {
-    color: orangered;
-    border-color: orangered;
-  }
-  
-  .btn-outline-success:hover {
-    color: #fff;
-    background-color: orangered;
-  }
-  
-  .custom-orange {
-    color: orangered;
-    border-color: orangered;
-  }
-  
-  .custom-orange:hover {
-    background-color: orangered;
-    color: white;
-  }
+
   
   .main-container {
     margin-top: 80px;
@@ -123,35 +122,6 @@ body {
     z-index: 1000;
     padding: 15px;
     font-size: 20px;
-  }
-
-    /* Estilo y animaciones */
-    .shake-animation {
-      animation: shake 0.5s infinite alternate;
-  }
-
-  @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-2px); }
-      50% { transform: translateX(2px); }
-      75% { transform: translateX(-2px); }
-      100% { transform: translateX(0); }
-  }
-
-  .pulse-animation {
-      animation: pulse 1s infinite alternate;
-  }
-
-  @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-  }
-
-  /* Estilo del botón de checkout */
-  #checkout-button:disabled {
-      background-color: #ccc;
-      cursor: not-allowed;
   }
 
   
@@ -290,23 +260,14 @@ body {
     cursor: pointer;
   }
 
-  .cart-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-    background-color: orangered;
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    transition: all 0.3s ease;
+  .collapse {
+    transition: height 0.3s ease-in-out;
 }
 
-.cart-button:hover {
-    background-color: darkorange;
-    transform: scale(1.1);
+.collapse.show {
+    height: auto;
 }
+
   
   #pedido-form button:hover {
     background-color: #0056b3;
@@ -359,21 +320,32 @@ body {
 }
 
 
-/* Estilo para el botón cuando hay productos */
-#cart-button.has-items {
-  background-color: #ff4500; /* Cambia el color del fondo, por ejemplo */
-  color: white;
-  border: 2px solid #ff6347; /* Puedes agregar un borde destacado */
+
+
+.heart-animation {
+
+  position: absolute;
+  font-size: 2rem;
+  color: red;
+  pointer-events: none;
+  z-index: 9999;
+  animation: fadeUp 1s ease-out forwards;
 }
 
-/* Estilo para el contador del carrito cuando hay productos */
-#cart-status {
-  display: inline-block;
-  background-color: #ff4500;  /* Similar al color del botón */
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  text-align: center;
-  line-height: 20px;
+@keyframes fadeUp {
+  0% {
+      transform: translateY(0);
+      opacity: 1;
+  }
+  100% {
+      transform: translateY(-50px);
+      opacity: 1;
+  }
+}
+
+.heart-animation {
+  width: 40px; /* Aumenta el tamaño */
+  height: 40 px;
+  pointer-events: none; /* Evitar interferencias con clics */
+  z-index: 9999; /* Asegurar que esté en la parte superior */
 }

@@ -90,4 +90,265 @@
     margin: 0 5px;
   }
 
-  
+  carrito.js------->>>>>>>>>
+
+  // carrito.js
+
+// Variables globales
+const cartSidebar = document.getElementById('cart-sidebar');
+const cartItems = document.getElementById('cart-items-container');
+const totalElement = document.getElementById('total');
+const cartCountElement = document.getElementById('cart-count');
+
+// Cargar productos desde el archivo JSON
+async function cargarProductos() {
+    try {
+        const response = await fetch('/assets/json/productos.json'); // Ajusta la ruta si es necesario
+        if (!response.ok) throw new Error('Error al cargar productos');
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+// Renderizar el carrito
+async function renderCart() {
+  // Cargar el carrito desde localStorage
+  let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  carrito = carrito.filter(item => item.quantity > 0); // Filtra productos con cantidad > 0
+  cartItems.innerHTML = ''; // Limpiar la lista de productos en el carrito
+  let total = 0;
+  const metodoPago = document.getElementById('metodopago')?.value || 'Efectivo';
+
+  const productosData = await cargarProductos();
+  if (!productosData) return;
+
+  // Recorre los productos del carrito y genera los elementos de la lista
+  carrito.forEach((item) => {
+      const producto = productosData.categorias
+          .flatMap(categoria => categoria.subcategorias)
+          .flatMap(subcategoria => subcategoria.productos)
+          .find(prod => prod.id === item.id);
+
+      if (producto) {
+          const precioUnitario = (metodoPago === 'Tarjeta' || metodoPago === 'Transferencia') 
+              ? producto.precioTransferenciaTarjeta 
+              : producto.precioEfectivo;
+          const subtotal = precioUnitario * item.quantity;
+          total += subtotal;
+
+          const cartItem = document.createElement('li');
+          cartItem.classList.add('cart-item');
+          cartItem.innerHTML = `
+              <div class="item-name">${item.nombre}</div>
+              <div class="item-price">$${precioUnitario.toLocaleString('es-CL')}</div>
+              <div class="item-controls">
+                  <button class="btn btn-outline-primary btn-sm" onclick="updateQuantity('${item.id}', -1)">-</button>
+                  <span class="item-quantity">${item.quantity}</span>
+                  <button class="btn btn-outline-primary btn-sm" onclick="updateQuantity('${item.id}', 1)">+</button>
+              </div>
+              <div class="item-subtotal">$${subtotal.toLocaleString('es-CL')}</div>`;
+          cartItems.appendChild(cartItem);
+
+          item.precio = precioUnitario;
+      }
+  });
+
+  // Mostrar el total en la interfaz
+  totalElement.innerText = total.toLocaleString('es-CL');
+  localStorage.setItem('carrito', JSON.stringify(carrito)); // Guardar el carrito actualizado
+
+  // Contador de productos
+  const cartCount = carrito.reduce((count, item) => count + item.quantity, 0);
+
+  // Obtener el botón del carrito
+  const cartButton = document.getElementById('cart-button');
+
+  // Aplicar animación de vibración y cambio de color solo si hay productos en el carrito
+  if (cartCount > 0) {
+      cartButton.classList.add('vibrating');
+      cartButton.classList.remove('empty');
+  } else {
+      cartButton.classList.remove('vibrating');
+      cartButton.classList.add('empty');
+  }
+}
+
+
+
+// Actualizar la cantidad de un producto en el carrito
+function updateQuantity(id, change) {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const productIndex = carrito.findIndex(item => item.id === id);
+
+    if (productIndex > -1) {
+        carrito[productIndex].quantity += change;
+        if (carrito[productIndex].quantity < 1) carrito.splice(productIndex, 1);
+    }
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    renderCart();
+}
+
+// Agregar un producto al carrito
+function agregarAlCarrito(id, nombre, precio) {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const existingProduct = carrito.find(item => item.id === id);
+
+    if (existingProduct) {
+        existingProduct.quantity += 1;
+    } else {
+        carrito.push({ id, nombre, precio, quantity: 1 });
+    }
+
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+    renderCart();
+}
+
+// Limpiar el carrito
+function limpiarCarrito() {
+    localStorage.removeItem('carrito');
+    renderCart();
+    console.log('El carrito ha sido limpiado.');
+}
+
+// Actualizar el precio según el método de pago
+async function actualizarPrecio() {
+    await renderCart();
+}
+
+// Mostrar/ocultar el sidebar del carrito
+function toggleCartSidebar() {
+    cartSidebar.classList.toggle('show');
+}
+
+// Enviar pedido
+function enviarPedido() {
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    const total = totalElement.innerText;
+
+    if (carrito.length === 0) {
+        alert("El carrito está vacío.");
+        return;
+    }
+
+    let mensaje = "Detalle de Pedido:\n";
+    carrito.forEach(item => {
+        mensaje += `Producto: ${item.nombre}, Cantidad: ${item.quantity}, Precio: $${item.precio.toLocaleString('es-CL')}\n`;
+    });
+    mensaje += `Total a Pagar: $${total}`;
+    alert(mensaje); // Reemplaza con la lógica de envío por WhatsApp si es necesario
+}
+
+
+
+// Exportar funciones necesarias
+window.toggleCartSidebar = toggleCartSidebar;
+window.agregarAlCarrito = agregarAlCarrito;
+window.actualizarPrecio = actualizarPrecio;
+window.enviarPedido = enviarPedido;
+window.updateQuantity = updateQuantity;
+window.limpiarCarrito = limpiarCarrito;
+
+export { agregarAlCarrito, limpiarCarrito, updateQuantity, renderCart };
+<--------------carrito.js
+
+// Funcion que muestra imagen animada al agregar un producto al carrito
+
+function mostrarMensajeCarrito() {
+  const button = document.getElementById('cart-button');
+  if (!button) return;
+
+  for (let i = 0; i < 4; i++) { // Generar 4 corazones
+      const heart = document.createElement('div');
+      heart.classList.add('heart-animation');
+      heart.innerHTML = '<i class="bi bi-heart-fill"></i>';
+
+      // Obtener la posición del botón en relación a la ventana
+      const rect = button.getBoundingClientRect();
+
+      // Usar posición fija para mantener los corazones visibles
+      heart.style.position = 'fixed';
+      heart.style.left = `${rect.left + rect.width / 2}px`; // Centrado horizontalmente respecto al botón
+      heart.style.top = `${rect.top + rect.height / 2}px`; // Centrado verticalmente respecto al botón
+
+      // Aplicar un desplazamiento aleatorio
+      const randomOffsetX = Math.random() * 50 - 25; // Desplazamiento horizontal aleatorio
+      const randomOffsetY = Math.random() * 50 - 25; // Desplazamiento vertical aleatorio
+      heart.style.left = `${parseFloat(heart.style.left) + randomOffsetX}px`;
+      heart.style.top = `${parseFloat(heart.style.top) + randomOffsetY}px`;
+
+      // Añadir el corazón al DOM
+      document.body.appendChild(heart);
+
+      // Animación hacia arriba y desvanecimiento
+      heart.animate(
+          [
+              { transform: 'translateY(0)', opacity: 1 },
+              { transform: 'translateY(-50px)', opacity: 0 }
+          ],
+          {
+              duration: 2000 + i * 200, // Añadir un pequeño desfase entre corazones
+              easing: 'ease-out'
+          }
+      );
+
+      // Eliminar el corazón del DOM después de la animación
+      setTimeout(() => {
+          heart.remove();
+      }, 1200 + i * 300);
+  }
+}
+
+
+// imagenes animadas desde img 
+function mostrarMensajeCarrito() {
+  const button = document.getElementById('cart-button');
+  if (!button) return;
+
+  for (let i = 0; i < 4; i++) { // Generar 4 imágenes animadas
+      const heart = document.createElement('img'); // Crear un elemento img
+      heart.classList.add('heart-animation');
+      heart.src = 'assets/img/icono/hat.png'; // Ajusta la ruta según tu proyecto
+
+      // Obtener la posición del botón en relación a la ventana
+      const rect = button.getBoundingClientRect();
+
+      // Usar posición fija para mantener las imágenes visibles
+      heart.style.position = 'fixed';
+      heart.style.left = `${rect.left + rect.width / 2}px`; // Centrado horizontalmente respecto al botón
+      heart.style.top = `${rect.top + rect.height / 2}px`; // Centrado verticalmente respecto al botón
+
+      // Aplicar un desplazamiento aleatorio
+      const randomOffsetX = Math.random() * 50 - 25; // Desplazamiento horizontal aleatorio
+      const randomOffsetY = Math.random() * 50 - 25; // Desplazamiento vertical aleatorio
+      heart.style.left = `${parseFloat(heart.style.left) + randomOffsetX}px`;
+      heart.style.top = `${parseFloat(heart.style.top) + randomOffsetY}px`;
+
+      // Añadir la imagen al DOM
+      document.body.appendChild(heart);
+
+      // Animación hacia arriba y desvanecimiento
+      heart.animate(
+          [
+              { transform: 'translateY(0)', opacity: 1 },
+              { transform: 'translateY(-50px)', opacity: 0 }
+          ],
+          {
+              duration: 2000 + i * 200, // Añadir un pequeño desfase entre imágenes
+              easing: 'ease-out'
+          }
+      );
+
+      // Eliminar la imagen del DOM después de la animación
+      setTimeout(() => {
+          heart.remove();
+      }, 1200 + i * 300);
+  }
+}
+
+
+
+
+Mi ultimo carrito.js

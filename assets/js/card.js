@@ -6,12 +6,15 @@ import { renderNavbar } from './navbar.js';
 import { agregarAlCarrito } from './carrito.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  loadData().then(data => {
-    renderProducts(data);
-    renderNavbar(data.categorias);
-    agregarAlCarrito(data);
-  }).catch(error => console.error('Error al cargar el archivo JSON:', error));
+  loadData()
+    .then(data => {
+      renderProducts(data); 
+      renderNavbar(data.categorias); 
+      setupAddToCartButtons(); // Asocia eventos a los botones de agregar
+    })
+    .catch(error => console.error('Error al cargar el archivo JSON:', error));
 });
+
 
 // Función para renderizar los productos en el contenedor
 function renderProducts(data) {
