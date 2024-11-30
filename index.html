@@ -1,3 +1,4 @@
+<!--index.html-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,22 +24,14 @@
                 <a class="navbar-brand" href="#">
                     <img src="assets/img/logo/kamon_logo.png" alt="Logo de tu sitio" style="width: 80px; height: 80px;">
                 </a>
-                <button class="navbar-toggler rounded p-2" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler rounded p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <img src="assets/img/logo/kamon_logo.png" alt="Logo Emprendimiento" class="rounded-circle navbar-toggler-img" style="width: 30px; height: 30px;">
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbarCategories">
-                        <!-- Menú desplegable modificado -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Categorías
-                            </a>
-                            <ul class="dropdown-menu" id="dropdown-menu-categories">
-                                <!-- Aquí se renderizarán las categorías -->
-                            </ul>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categorías</a>
+                            <ul class="dropdown-menu" id="dropdown-menu-categories"></ul>
                         </li>
                     </ul>
                 </div>
@@ -46,14 +39,54 @@
         </nav>
     </header>
 
-    <main class="container my-4 main-container">
-        <div id="products-container" class="products-container"></div>
-    </main>
-<!-- Botón del carrito -->
+
+
 <!-- Botón del carrito -->
 <button id="cart-button" class="cart-button btn custom-orange rounded-circle" onclick="toggleCartSidebar()">
     <span id="cart-count"></span>
     <i id="cart-icon" class="bi bi-cart3"></i>
+  </button>
+
+
+
+
+<!-- Offcanvas para los filtros -->
+<div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasFiltersLabel">Filtros</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+  </div>
+  <div class="offcanvas-body">
+    <!-- Contenido de los filtros -->
+    <form id="filtersForm">
+      <div class="mb-3">
+        <label for="categoryFilter" class="form-label">Categoría</label>
+        <select id="categoryFilter" class="form-select">
+          <option value="">Todas</option>
+          <option value="electronics">Electrónica</option>
+          <option value="fashion">Moda</option>
+          <!-- Agrega más categorías según tu JSON -->
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Rango de precios</label>
+        <input type="range" class="form-range" id="priceRange" min="0" max="1000" step="10">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Disponibilidad</label>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="inStock">
+          <label class="form-check-label" for="inStock">En stock</label>
+        </div>
+      </div>
+      <button type="button" class="btn btn-success w-100" onclick="applyFilters()">Aplicar filtros</button>
+    </form>
+  </div>
+</div>
+
+<!-- Botón para abrir el menú de filtros -->
+<button class="btn btn-primary offcanvas-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">
+    Filtros<i class="bi bi-funnel"></i>
   </button>
 
     <!-- Sidebar del carrito -->
@@ -64,10 +97,13 @@
     </div>
     <div class="cart-content">
         <div id="cart-items-container"></div>
-        <p class="fw-bold mt-3">Total: $<span id="total">0.00</span></p>
+        <div class="cart-productos">
+            <p class="fw-bold mt-3">Total: $<span id="total">0.00</span></p>
+        </div>
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#pedido-form" aria-expanded="false" aria-controls="pedido-form">
-            Datos del Pedido
+            Datos del Pedido <i class="bi bi-chevron-double-down"></i>
         </button>
+        <hr style="color: #ff5005; border: 2px solid #ff5005; width:100%; margin:10px;">
         <div id="pedido-form" class="collapse">
             <form id="pedido-formulario" class="mt-3">
                 <!-- Datos del cliente -->
@@ -89,7 +125,7 @@
                     </select>
                 </div>
                 <div class="mb-3">
-                    <select id="metodopago" class="form-select" required onchange="actualizarPrecio()">
+                    <select id="metodopago" class="form-select">
                         <option value="" disabled selected>Selecciona método de pago</option>
                         <option value="Efectivo">Efectivo</option>
                         <option value="Tarjeta">Tarjeta</option>
@@ -100,47 +136,61 @@
                 <div class="form-check mt-2">
                     <input type="checkbox" id="condiciones" class="form-check-input" required>
                     <label class="form-check-label">
-                        Acepto los <a href="/terminos&condiciones.html" target="_blank">términos y condiciones</a>
+                        Acepto los <a class="terminos" href="/terminos&condiciones.html" target="_blank">términos y condiciones</a>
                     </label>
                 </div>
                 <div class="mt-2">
                     <textarea id="comentario" class="form-control" placeholder="Agrega un comentario"></textarea>
-                </div>
+                </div><br>
             </form>
         </div>
                 <div id="cart-actions" class="cart-actions">
-                    <button class="btn btn-danger" onclick="limpiarCarrito()">Vaciar Carrito</button>
+                    <button class="btn btn-danger" onclick="limpiarCarrito()">Vaciar Carrito <i class="bi bi-trash3"></i></button>
                 </div>
 
                 <button class="btn btn-success w-100 mt-3" type="button" onclick="enviarPedido()">
                     <i class="bi bi-whatsapp"></i> Enviar Pedido
                 </button>
+                <hr>
+                <section id="contacto" class="bg-light py-4">
+                    <div class="container">
+                        <h2 class="text-center">Contacto</h2>
+                        <p class="text-center">Puedes contactarnos a través de los siguientes medios:</p>
+                        <ul class="list-unstyled text-center">
+                            <li>Email: contacto@nuestracarta.com</li>
+                            <li>Teléfono: +123 456 7890</li>
+                        </ul>
+                    </div>
+                </section>
+            
+                <footer class="bg-light text-center py-4">
+                    <p>&copy; 2024 Nuestra Carta. Todos los derechos reservados.</p>
+                </footer>
             </form>
         </div>
     </div>
-
+    <!--Fin Carrito-->
+    <!--modal-->
     <div id="info-modal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Información del Producto</h5>
-                    <button type="button" class="close" onclick="closeInfoModal()">&times;</button>
-                </div>
                 <div class="modal-body" id="info-modal-content"></div>
+                <button type="button" class="close" onclick="closeInfoModal()">&times;</button>
             </div>
         </div>
     </div>
 
-    <section id="contacto" class="bg-light py-4">
-        <div class="container">
-            <h2 class="text-center">Contacto</h2>
-            <p class="text-center">Puedes contactarnos a través de los siguientes medios:</p>
-            <ul class="list-unstyled text-center">
-                <li>Email: contacto@nuestracarta.com</li>
-                <li>Teléfono: +123 456 7890</li>
-            </ul>
-        </div>
-    </section>
+   <!-- Contenedor principal con los filtros y productos -->
+<main class="container my-4 main-container">
+
+    <!-- Contenedor del listado de productos -->
+    <div id="products-container" class="products-container">
+      <!-- Aquí se inyectarán las cards de productos -->
+    </div>
+  
+  </main>
+  
+
 
     <footer class="bg-light text-center py-4">
         <p>&copy; 2024 Nuestra Carta. Todos los derechos reservados.</p>
@@ -154,6 +204,8 @@
     <script type="module" src="assets/js/navbar.js"></script>
     <script type="module" src="assets/js/card.js"></script>
     <script type="module" src="assets/js/carrito.js"></script>
+    <script type="module" src="assets/js/filtros.js" defer></script>
+    <script type="module" src="assets/js/animaciones.js"></script>
     <script type="module" src="assets/js/modal.js"></script>
     <script type="module" src="assets/js/whatsapp.js"></script>
     <script type="module">
@@ -166,3 +218,9 @@
 </body>
 
 </html>
+
+
+
+
+
+

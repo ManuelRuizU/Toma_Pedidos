@@ -1,4 +1,8 @@
-// assets/js/carrito.js
+// assets/js/carrito.js carrito y animaciones.
+
+import { mostrarMensajeCarrito, showHearts }from'./animaciones.js';
+import { enviarPedido } from './whatsapp.js';
+
 // Variables globales
 const cartSidebar = document.getElementById('cart-sidebar');
 const cartItems = document.getElementById('cart-items-container');
@@ -62,19 +66,52 @@ async function renderCart() {
       }
   });
 
-  // Agregar evento a los botones de agregar al carrito
-  const addToCartButton = document.querySelectorAll('.btn-primary'); 
-  addToCartButton.forEach(button => {
-      button.addEventListener('click', () => {
-          mostrarMensajeCarrito(); 
-          const productoId = button.parentElement.querySelector('button').getAttribute('onclick').match(/'(\w+)'/)[1];
-          const productoNombre = button.parentElement.querySelector('h5').textContent;
-          const precioEfectivo = button.parentElement.querySelector('p:nth-child(3)').textContent.match(/: \$([\d.]+)/)[1];
-          const precioTransferenciaTarjeta = button.parentElement.querySelector('p:nth-child(4)').textContent.match(/: \$([\d.]+)/)[1];
-          const precio = (metodoPago === 'Tarjeta' || metodoPago === 'Transferencia') ? precioTransferenciaTarjeta : precioEfectivo;
-          agregarAlCarrito(productoId, productoNombre, precio);
-      });
-  });
+// Seleccionar únicamente los botones de agregar al carrito
+const addToCartButtons = document.querySelectorAll('.btn-add-to-cart'); // Cambiar clase específica para evitar conflictos
+
+addToCartButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        mostrarMensajeCarrito();
+
+        try {
+            // Verificar que el botón tenga un elemento padre con los atributos necesarios
+            const parentElement = button.parentElement;
+            if (!parentElement) throw new Error('Elemento padre no encontrado.');
+
+            const parentButton = parentElement.querySelector('button');
+            if (!parentButton) throw new Error('No se encontró un botón en el elemento padre.');
+
+            const onclickValue = parentButton.getAttribute('onclick');
+            if (!onclickValue) throw new Error('El botón no contiene un atributo "onclick".');
+
+            // Extraer el productoId del atributo onclick
+            const productoIdMatch = onclickValue.match(/'(\w+)'/);
+            if (!productoIdMatch) throw new Error('El atributo onclick no contiene el formato esperado.');
+            const productoId = productoIdMatch[1];
+
+            // Obtener el nombre del producto
+            const productoNombre = parentElement.querySelector('h5')?.textContent || 'Producto sin nombre';
+
+            // Obtener el precio efectivo
+            const precioEfectivoText = parentElement.querySelector('p:nth-child(3)')?.textContent || '';
+            const precioEfectivoMatch = precioEfectivoText.match(/: \$([\d.]+)/);
+            const precioEfectivo = precioEfectivoMatch ? precioEfectivoMatch[1] : '0.00';
+
+            // Obtener el precio de transferencia o tarjeta
+            const precioTransferenciaTarjetaText = parentElement.querySelector('p:nth-child(4)')?.textContent || '';
+            const precioTransferenciaTarjetaMatch = precioTransferenciaTarjetaText.match(/: \$([\d.]+)/);
+            const precioTransferenciaTarjeta = precioTransferenciaTarjetaMatch ? precioTransferenciaTarjetaMatch[1] : '0.00';
+
+            // Lógica de agregar al carrito
+            console.log('Producto agregado:', { productoId, productoNombre, precioEfectivo, precioTransferenciaTarjeta });
+            agregarAlCarrito(productoId, productoNombre, precioEfectivo, precioTransferenciaTarjeta);
+        } catch (error) {
+            console.error('Error al intentar agregar al carrito:', error.message);
+        }
+    });
+});
+
+
 
   totalElement.innerText = total.toLocaleString('es-CL');
   localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -116,62 +153,7 @@ function agregarAlCarrito(id, nombre, precio) {
     mostrarMensajeCarrito(); // Muestra el mensaje cuando se agrega un producto
 }
 
-// funcion imagenes animadas desde img
-function mostrarMensajeCarrito() {
-  const button = document.getElementById('cart-button');
-  if (!button) return;
 
-  for (let i = 0; i < 5; i++) { // Generar 4 imágenes animadas
-      const heart = document.createElement('img'); // Crear un elemento img
-      heart.classList.add('heart-animation');
-      heart.src = 'assets/img/icono/santa-claus.png'; // Ajusta la ruta según tu proyecto
-
-      // Obtener la posición del botón en relación a la ventana
-      const rect = button.getBoundingClientRect();
-
-      // Usar posición fija para mantener las imágenes visibles
-      heart.style.position = 'fixed';
-      heart.style.left = `${rect.left + rect.width / 5}px`; // Centrado horizontalmente respecto al botón
-      heart.style.top = `${rect.top + rect.height / 2}px`; // Centrado verticalmente respecto al botón
-
-      // Aplicar un desplazamiento aleatorio
-      const randomOffsetX = Math.random() * 50 - 25; // Desplazamiento horizontal aleatorio
-      const randomOffsetY = Math.random() * 50 - 25; // Desplazamiento vertical aleatorio
-      heart.style.left = `${parseFloat(heart.style.left) + randomOffsetX}px`;
-      heart.style.top = `${parseFloat(heart.style.top) + randomOffsetY}px`;
-
-      // Añadir la imagen al DOM
-      document.body.appendChild(heart);
-
-      // Animación hacia arriba y desvanecimiento
-      heart.animate(
-          [
-              { transform: 'translateY(0)', opacity: 1 },
-              { transform: 'translateY(-50px)', opacity: 1 }
-          ],
-          {
-              duration: 2000 + i * 1000, // Añadir un pequeño desfase entre imágenes
-              easing: 'ease-out'
-          }
-      );
-
-      // Eliminar la imagen del DOM después de la animación
-      setTimeout(() => {
-          heart.remove();
-      }, 1200 + i * 300);
-  }
-}
-
-
-
-
-const addToCartButton = document.querySelectorAll('.btn-primary'); // Selecciona los botones de agregar al carrito
-
-addToCartButton.forEach(button => {
-    button.addEventListener('click', () => {
-        mostrarMensajeCarrito(); // Muestra el mensaje al agregar un producto
-    });
-});
 
 
 // Limpiar el carrito
@@ -187,54 +169,11 @@ function toggleCartSidebar() {
     //showHearts(document.getElementById('cart-button')); // Ejecuta la animación desde el botón
   }
   
-  // Función para mostrar corazones animados
-  function showHearts(button) {
-      const heart = document.createElement('div');
-      heart.classList.add('heart-animation');
-      heart.innerHTML = '❤️';
-      document.body.appendChild(heart);
-  
-      // Posición inicial cerca del botón
-      const rect = button.getBoundingClientRect();
-      heart.style.left = `${rect.left + rect.width / 2}px`;
-      heart.style.top = `${rect.top - 10}px`;
-  
-      // Animación hacia arriba
-      heart.animate(
-          [
-              { transform: 'translateY(0)', opacity: 1 },
-              { transform: 'translateY(-50px)', opacity: 0 }
-          ],
-          {
-              duration: 1000,
-              easing: 'ease-out'
-          }
-      );
-  
-      // Eliminar el corazón del DOM después de la animación
-      setTimeout(() => {
-          heart.remove();
-      }, 1000);
-  }
+
 
 
 // Enviar pedido
-function enviarPedido() {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const total = totalElement.innerText;
 
-    if (carrito.length === 0) {
-        alert("El carrito está vacío.");
-        return;
-    }
-
-    let mensaje = "Detalle de Pedido:\n";
-    carrito.forEach(item => {
-        mensaje += `Producto: ${item.nombre}, Cantidad: ${item.quantity}, Precio: $${item.precio.toLocaleString('es-CL')}\n`;
-    });
-    mensaje += `Total a Pagar: $${total}`;
-    alert(mensaje); // Reemplaza con la lógica de envío por WhatsApp si es necesario
-}
 
 // Iniciar el carrito al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
@@ -248,4 +187,15 @@ window.enviarPedido = enviarPedido;
 window.updateQuantity = updateQuantity;
 window.limpiarCarrito = limpiarCarrito;
 
-export { agregarAlCarrito, limpiarCarrito, updateQuantity, renderCart };
+// Variables globales
+let carrito = JSON.parse(localStorage.getItem('carrito')) || []; // Esta es la variable que debes exportar
+
+// Funciones y lógica relacionadas con el carrito...
+
+// Exportar la variable carrito
+export { carrito, agregarAlCarrito, updateQuantity, limpiarCarrito, renderCart };
+
+
+
+
+

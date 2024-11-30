@@ -1,0 +1,110 @@
+
+.cart-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    padding: 15px;
+    font-size: 20px;
+    background-color: orangered;
+    color: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.cart-button:hover {
+    transform: scale(1.1);
+}
+
+.cart-sidebar {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+}
+
+.cart-sidebar.show {
+    right: 0;
+}
+
+.cart-header {
+    background-color: #ff5405;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.cart-content {
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+/* Ajuste para los elementos del carrito */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 1rem;
+  }
+  
+  /* Nombre del producto alineado a la izquierda */
+  .item-name {
+    flex: 2;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  /* Controles de cantidad al centro */
+  /* Controles de cantidad al centro con espaciado */
+.item-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Espaciado entre los botones y la cantidad */
+  }
+  
+  /* Botones de cantidad más pequeños usando el estilo original */
+  .btn-outline-primary {
+    color: #ff5405;
+    border-color: #ff5405;
+    transition: background-color 0.3s ease;
+    width: 30px; /* Ajusta el ancho */
+    height: 30px; /* Ajusta la altura */
+    font-size: 0.8rem; /* Reduce el tamaño de la fuente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px; /* Mantiene bordes redondeados */
+    padding: 0; /* Elimina el relleno extra */
+  }
+  
+  /* Botón al pasar el cursor */
+  .btn-outline-primary:hover {
+    background-color: #ff5405;
+    border-color: #ff5405;
+    color: white;
+  }
+  
+  /* Cantidad mostrada entre los botones */
+  .item-quantity {
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+    width: 35px; /* Mantiene espacio suficiente para los números */
+    text-align: center;
+  }
+  
+  /* Espaciado adicional para el precio unitario y el subtotal */
+  .item-price {
+    margin-right: 10px; /* Espaciado a la derecha del precio */
+    text-align: right;
+    color: #ff5405;
+  }
+  
+  .item-subtotal {
+    margin-left: 10px; /* Espaciado a la izquierda del subtotal */
+    text-align: right;
+    color: #333;
+  }
+  

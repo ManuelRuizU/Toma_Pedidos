@@ -7,7 +7,7 @@ window.closeInfoModal = closeInfoModal;
 function showInfo(nombre, descripcion) {
     const modalContent = document.getElementById('info-modal-content');
     modalContent.innerHTML = `
-      <h2>${nombre}</h2>
+      <h2 class = "text-center" style = "bold">${nombre}</h2><hr>
       <p>${descripcion}</p>
     `;
     const infoModal = document.getElementById('info-modal');
