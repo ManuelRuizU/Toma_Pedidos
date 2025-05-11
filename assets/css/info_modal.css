@@ -1,0 +1,91 @@
+/* assets/css/info_modal*/
+
+/* assets/css/info_modal.css */
+
+/* Estilos personalizados para el modal de información */
+.custom-modal .modal-content {
+    border-radius: 12px;  /* Bordes redondeados suaves */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);  /* Sombra pronunciada */
+    border: 2px solid #007bff;  /* Borde azul */
+    background-color: #fff;  /* Asegura un fondo consistente */
+}
+
+/* Encabezado personalizado del modal */
+.custom-header {
+    background-color: #e0f3ff;  /* Fondo claro */
+    color: #004085;  /* Color del texto para mejor contraste */
+    padding: 15px;  /* Añade relleno para un diseño más espacioso */
+    position: relative;  /* Para posicionar el botón de cierre */
+}
+
+/* Botón de cierre personalizado */
+.custom-close {
+    color: #004085;
+    background-color: transparent;  /* Sin fondo para mejor integración */
+    border: none;
+    font-size: 1.5rem;  /* Tamaño adecuado para la `X` */
+    cursor: pointer;  /* Cambia el cursor a puntero */
+    position: absolute;
+    right: 20px;  /* Alineación precisa */
+    top: 15px;  
+    transition: color 0.2s;  /* Suave transición de color */
+}
+
+.custom-close:hover {
+    color: #007bff;  /* Cambia de color al pasar el cursor */
+}
+
+/* Cuerpo del modal personalizado */
+.custom-body {
+    padding: 20px;  /* Espaciado interno */
+}
+
+.custom-body p {
+    color: #555;  /* Color del texto */
+    font-size: 1rem;  /* Tamaño base */
+}
+
+/* Variables CSS para reutilización */
+:root {
+    --modal-backdrop-opacity: 0.5;
+    --modal-shadow-color: rgba(0, 0, 0, 0.2);
+    --modal-shadow-offset: 0 0 10px;
+}
+
+/* Fondo del modal */
+.modal {
+    background-color: rgba(0, 0, 0, var(--modal-backdrop-opacity));
+}
+
+/* Animación al mostrar el modal */
+.modal.show {
+    display: block;
+    animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.modal-content {
+    animation: slideUp 0.3s ease-in-out forwards;
+    border-radius: 12px;  /* Consistente con .custom-modal */
+    box-shadow: var(--modal-shadow-offset) var(--modal-shadow-color);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

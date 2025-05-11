@@ -21,7 +21,7 @@
     <header class="fondo">
         <nav class="navbar navbar-expand-lg fixed-top navbar-light" id="mainNavbar">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="home.html">
                     <img src="assets/img/logo/kamon_logo.png" alt="Logo de tu sitio" style="width: 80px; height: 80px;">
                 </a>
                 <button class="navbar-toggler rounded p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,19 +31,45 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbarCategories">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categorías</a>
-                            <ul class="dropdown-menu" id="dropdown-menu-categories"></ul>
+                            <ul class="dropdown-menu" id="dropdown-menu-categories">
+                                <!-- Aquí se agregan las categorías dinámicamente desde JS -->
+                            </ul>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+    
+    
+
+
+
+    
+<!-- Modal Info -->
+<div id="info-modal" class="custom-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header custom-header">
+          <h5 class="modal-title" id="infoModalLabel"></h5>
+          <button type="button" class="close custom-close" onclick="closeInfoModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body custom-body" id="info-modal-content"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeInfoModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!--Fin Modal Info -->
 
 
 
 <!-- Botón del carrito -->
 <button id="cart-button" class="cart-button btn custom-orange rounded-circle" onclick="toggleCartSidebar()">
-    <span id="cart-count"></span>
     <i id="cart-icon" class="bi bi-cart3"></i>
   </button>
 
@@ -63,21 +89,12 @@
         <label for="categoryFilter" class="form-label">Categoría</label>
         <select id="categoryFilter" class="form-select">
           <option value="">Todas</option>
-          <option value="electronics">Electrónica</option>
-          <option value="fashion">Moda</option>
           <!-- Agrega más categorías según tu JSON -->
         </select>
       </div>
       <div class="mb-3">
         <label class="form-label">Rango de precios</label>
         <input type="range" class="form-range" id="priceRange" min="0" max="1000" step="10">
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Disponibilidad</label>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="inStock">
-          <label class="form-check-label" for="inStock">En stock</label>
-        </div>
       </div>
       <button type="button" class="btn btn-success w-100" onclick="applyFilters()">Aplicar filtros</button>
     </form>
@@ -116,9 +133,17 @@
                 <div class="mb-3">
                     <input type="text" id="direccion" class="form-control" placeholder="Dirección" required>
                 </div>
+                <div class="mb-3">
+                    <label for="horario" class="form-label">Horario sujeto a disponibilidad</label>
+                    <select id="horario" class="form-select" required>
+                        <option value="" disabled selected>Elige un horario</option>
+                        <!-- Aquí se llenarán los horarios desde JS -->
+                    </select>
+                </div>
+                
                 <!-- Selección de entrega y método de pago -->
                 <div class="mb-3">
-                    <select id="tipo-entrega" class="form-select" required>
+                    <select id="tipoentrega" class="form-select" required>
                         <option value="" disabled selected>Selecciona tipo de entrega</option>
                         <option value="Domicilio">Domicilio</option>
                         <option value="Retiro en local">Retiro en local</option>
@@ -134,7 +159,7 @@
                 </div>
                 <!-- Aceptación de términos y comentarios -->
                 <div class="form-check mt-2">
-                    <input type="checkbox" id="condiciones" class="form-check-input" required>
+                    <input type="checkbox" id="terminos" class="form-check-input" required>
                     <label class="form-check-label">
                         Acepto los <a class="terminos" href="/terminos&condiciones.html" target="_blank">términos y condiciones</a>
                     </label>
@@ -152,6 +177,31 @@
                     <i class="bi bi-whatsapp"></i> Enviar Pedido
                 </button>
                 <hr>
+
+
+<!-- Modal de Validación -->
+<div class="modal" id="validationModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="validationModalLabel">Datos incompletos</h5>
+                <button type="button" class="btn-close" aria-label="Cerrar" onclick="closeValidationModal()"></button>
+            </div>
+            <div class="modal-body" id="validationModalBody">
+                <div class="contenido-modal" style="text-align: center;">
+                   <strong><p>Falta completar los siguientes datos:</p></strong>
+                    <!-- Aquí se mostrarán los mensajes de error -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeValidationModal()">Entendido</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN Modal de Validación -->
+
+
                 <section id="contacto" class="bg-light py-4">
                     <div class="container">
                         <h2 class="text-center">Contacto</h2>
@@ -170,6 +220,8 @@
         </div>
     </div>
     <!--Fin Carrito-->
+
+
     <!--modal-->
     <div id="info-modal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -184,7 +236,7 @@
 <main class="container my-4 main-container">
 
     <!-- Contenedor del listado de productos -->
-    <div id="products-container" class="products-container">
+    <div id="products-container" class="products-container mt-5">
       <!-- Aquí se inyectarán las cards de productos -->
     </div>
   
@@ -208,16 +260,12 @@
     <script type="module" src="assets/js/animaciones.js"></script>
     <script type="module" src="assets/js/modal.js"></script>
     <script type="module" src="assets/js/whatsapp.js"></script>
-    <script type="module">
-        import { updateQuantity } from './assets/js/carrito.js';
-        
-        // Asignar la función a la ventana global
-        window.updateQuantity = updateQuantity;
-    </script>
+    <script type="module" src="assets/js/horarios.js"></script>
 
 </body>
 
 </html>
+
 
 
 

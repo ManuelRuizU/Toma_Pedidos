@@ -1,19 +1,30 @@
 
 @media (max-width: 768px) {
+    /* Ajusta la posición del botón del carrito en pantallas pequeñas */
     .cart-button {
-        top: 155px;
-        bottom: auto;
+        top: 700px;  /* Reubica el botón hacia abajo para no superponerse con otros elementos */
+        bottom: auto;  /* Desactiva la propiedad 'bottom' que estaba en uso anteriormente */
     }
 
+    /* Ajusta la posición del botón de offcanvas (filtro) */
+    .offcanvas-button {
+        top: 600px;  /* Reubica este botón también, ajustando su posición para pantallas pequeñas */
+        bottom: auto;  /* Desactiva la propiedad 'bottom' */
+    }
+
+    /* Ajuste para que el contenido del modal ocupe casi todo el ancho en móviles */
     .modal-content {
-        width: 95%;
+        width: 95%;  /* Asegura que el modal sea más estrecho en dispositivos pequeños, aprovechando el espacio disponible */
     }
 
+    /* Alinea los elementos del carrito de forma centrada en pantallas pequeñas */
     .cart-item {
-        align-items: center;
+        align-items: center;  /* Centra los ítems dentro del carrito */
     }
 
+    /* Ajuste de tamaño para los botones del formulario del pedido */
     #pedido-form button {
-        width: 70%;
+        width: 70%;  /* Hace los botones del formulario más grandes y fáciles de pulsar */
     }
 }
+

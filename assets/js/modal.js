@@ -3,30 +3,27 @@
 window.showInfo = showInfo;
 window.closeInfoModal = closeInfoModal;
 
-// Función para mostrar el modal con la información del producto
-function showInfo(nombre, descripcion) {
-    const modalContent = document.getElementById('info-modal-content');
-    modalContent.innerHTML = `
-      <h2 class = "text-center" style = "bold">${nombre}</h2><hr>
-      <p>${descripcion}</p>
-    `;
-    const infoModal = document.getElementById('info-modal');
-    infoModal.classList.add('show');
-    infoModal.style.display = 'block';
-  }
+export function showInfo(nombre, descripcion) {
+  document.getElementById('infoModalLabel').textContent = nombre;
+  document.getElementById('info-modal-content').innerHTML = `<p>${descripcion}</p>`;
   
-  // Función para cerrar el modal
-  function closeInfoModal() {
-    const infoModal = document.getElementById('info-modal');
-    infoModal.classList.remove('show');
-    infoModal.style.display = 'none';
-  }
+  const infoModal = document.getElementById('info-modal');
+  infoModal.classList.add('show');
+  infoModal.style.display = 'block';
+  document.body.classList.add('modal-open');  // Para evitar desplazamiento del fondo
+}
 
-  const backdrop = document.querySelector('.modal');
-backdrop.addEventListener('click', function(event) {
+function closeInfoModal() {
+  const infoModal = document.getElementById('info-modal');
+  infoModal.classList.remove('show');
+  infoModal.style.display = 'none';
+  document.body.classList.remove('modal-open');
+}
+
+// Cerrar modal al hacer clic fuera del contenido
+const modalBackdrop = document.querySelector('.modal');
+modalBackdrop.addEventListener('click', function(event) {
   if (event.target === this) {
     closeInfoModal();
   }
 });
-  
-  export { showInfo, closeInfoModal };

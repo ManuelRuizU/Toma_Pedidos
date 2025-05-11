@@ -1,147 +1,536 @@
-
 {
-  "categorias": [
-      {
-          "id": "e506d525-cfd1-4165-a215-4805e4c662c4",
-          "imagen": "assets/img/logo/imagen.jpg",
-          "nombre": "Promociones",
-          "subcategorias": [
-              {
-                  "id": "df415af2-57d1-4d43-8f13-bbcfa3e5649d",
-                  "nombre": "Promos del Chef",
-                  "productos": [
-                      {
-                          "id": "7cee897a-0bc2-415c-bcd3-4d4b1144f839",
-                          "nombre": "40 del Chef",
-                          "descripcion": "40 piezas del Chef",
-                          "precioEfectivo": 11000,
-                          "precioTransferenciaTarjeta": 13000,
-                          "foto": "assets/img/productos/piezas.webp"
-                      },
-                      {
-                          "id": "6693604c-efc5-49cd-96f7-2672e6ae016b",
-                          "nombre": "60 del Chef",
-                          "descripcion": "60 piezas del Chef",
-                          "precioEfectivo": 14000,
-                          "precioTransferenciaTarjeta": 16000,
-                          "foto": "assets/img/productos/piezas.webp"
-                      }
-                  ]
-              },
-              {
-                  "id": "343be020-217e-4e16-9ae9-5335ccfa71b9",
-                  "nombre": "Promos VIP",
-                  "productos": [
-                      {
-                          "id": "f80a943f-7357-4972-9945-1c3136d6167e",
-                          "nombre": "50 VIP",
-                          "descripcion": "50 piezas VIP",
-                          "precioEfectivo": 15000,
-                          "precioTransferenciaTarjeta": 17000,
-                          "foto": "assets/img/productos/piezas.webp"
-                      },
-                      {
-                          "id": "a38ae437-825c-4b4e-a6f2-797d791fd6b1",
-                          "nombre": "70 VIP",
-                          "descripcion": "70 piezas VIP",
-                          "precioEfectivo": 18000,
-                          "precioTransferenciaTarjeta": 20000,
-                          "foto": "assets/img/productos/piezas.webp"
-                      }
-                  ]
-              },
-              {
-                  "id": "8b7317a2-139d-41a0-a4c9-a8a0c3d00240",
-                  "nombre": "Promos Premium",
-                  "productos": [
-                      {
-                          "id": "4ce112a6-5e9c-49b7-a919-d17f736f3d05",
-                          "nombre": "100 Premium",
-                          "descripcion": "100 piezas Premium",
-                          "precioEfectivo": 25000,
-                          "precioTransferenciaTarjeta": 30000,
-                          "foto": "assets/img/productos/piezas.webp"
-                      }
-                  ]
-              }
-          ]
-      },
-      {
-          "id": "b906332a-99f7-4792-a334-e340e61d99b8",
-          "imagen": "assets/img/logo/imagen.jpg",
-          "nombre": "Rolls",
-          "subcategorias": [
-              {
-                  "id": "d2862c72-a2ed-461d-8e1f-1a7d6471dc1c",
-                  "nombre": "Rolls clásicos",
-                  "productos": [
-                      {
-                          "id": "ac7ffe4b-de3e-46d6-9d3d-b26023049d3b",
-                          "nombre": "Rollito de salmón",
-                          "descripcion": "Rollito de salmón",
-                          "precioEfectivo": 5000,
-                          "precioTransferenciaTarjeta": 9000,
-                          "foto": "assets/img/productos/piezas.webp"
-                      }
-                  ]
-              },
-              {
-                  "id": "9e7a43e6-3d88-4382-9826-33056232d856",
-                  "nombre": "Rolls especiales",
-                  "productos": [
-                      {
-                          "id": "b906332a-55f7-4792-a334-e340e61d27b8",
-                          "nombre": "Rollito de langostinos",
-                          "descripcion": "Rollito de langostinos",
-                          "precioEfectivo": 8000,
-                          "precioTransferenciaTarjeta": 12000,
-                          "foto": "assets/img/productos/piezas.webp"
-                      }
-                  ]
-              }
-          ]
-      },
-      {
-          "id": "936da01f-9abd-4d9d-80c7-02af85c933z7",
-          "imagen": "assets/img/logo/imagen.jpg",
-          "nombre": "Extras",
-          "subcategorias": [
-              {
-                  "id": "afb5f126-33f1-48b8-9041-f5763d4b05eb",
-                  "nombre": "Soyas",
-                  "productos": [
-                      {
-                          "id": "w901973a-55f7-1492-x343-a034a61d72y8",
-                          "nombre": "Soya 3oz",
-                          "descripcion": "Soya 3oz",
-                          "precioEfectivo": 800,
-                          "precioTransferenciaTarjeta": 1000,
-                          "foto": "assets/img/productos/piezas.webp"
-                      }
-                  ]
-              }
-          ]
-      },
-      {
-          "id": "f80a943f-7357-4972-9945-1b3136d9354e",
-          "imagen": "assets/img/logo/imagen.jpg",
-          "nombre": "Bebestibles",
-          "subcategorias": [
-              {
-                  "id": "z906332a-55z7-4792-z334-z340z61z27b1",
-                  "nombre": "Jugos",
-                  "productos": [
-                      {
-                          "id": "936da01f-9abd-4d9d-80c7-02ah57c992z0",
-                          "nombre": "Jugo de naranja",
-                          "descripcion": "Jugo de naranja",
-                          "precioEfectivo": 2000,
-                          "precioTransferenciaTarjeta": 5000,
-                          "foto": "assets/img/productos/piezas.webp"
-                      }
-                  ]
-              }
-          ]
-      }
-  ]
+    "categorias": [
+        {
+            "id": "e506d525-cfd1-4165-a215-4805e4c662c4",
+            "imagen": "assets/img/logo/categorias/promosII.png",
+            "nombre": "Promociones",
+            "subcategorias": [
+                {
+                    "id": "df415af2-57d1-4d43-8f13-bbcfa3e5649d",
+                    "nombre": "Promos del Chef",
+                    "productos": [
+                        {
+                            "id": "3554d422-6899-47f9-9fcc-2c6e6d6b7cf7",
+                            "nombre": "30 del Chef",
+                            "descripcion": "🍣 Disfruta de 30 piezas: 10 fritas con pollo y queso crema. 10 envueltas en palta con camarón furai y queso crema. 10 Futomaki con queso y palta.  Incluye: ✅ 2 pares de palitos. ✅ 1 soya (2 oz c/u). ✅ 1 salsa estilo teriyaki especial (1.5 oz). ¡Perfecto para disfrutar! 🍱✨",
+                            "precioEfectivo": 10000,
+                            "precioTransferenciaTarjeta": 12000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "7cee897a-0bc2-415c-bcd3-4d4b1144f839",
+                            "nombre": "40 del Chef",
+                            "descripcion": "🍣 Disfruta de 40 piezas: 10 fritas con kanikama, cebollín y queso. 10 fritas con pollo y queso crema. 10 envueltas en palta con camarón furai y queso crema. 10 Futomaki con queso y palta.  Incluye: ✅ 3 pares de palitos. ✅ 2 soya (2 oz c/u). ✅ 1 salsa estilo teriyaki especial (1.5 oz). ¡Perfecto para compartir! 🍱✨",
+                            "precioEfectivo": 11000,
+                            "precioTransferenciaTarjeta": 13000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "6693604c-efc5-49cd-96f7-2672e6ae016b",
+                            "nombre": "50 del Chef",
+                            "descripcion": "🍣 Disfruta de 50 piezas: 10 fritas con kanikama, cebollín y queso. 10 fritas con pollo y queso crema. 10 envueltas en palta con camarón furai y queso crema. 10 Futomaki con queso y palta. 10 envueltas en sésamo tostado con pollo, cebollín y queso crema.  Incluye: ✅ 4 pares de palitos. ✅ 2 soya (2 oz c/u). ✅ 1 salsa estilo teriyaki especial (1.5 oz). ¡Perfecto para compartir! 🍱✨",
+                            "precioEfectivo": 14000,
+                            "precioTransferenciaTarjeta": 16000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "3e89505c-71e4-457c-94bf-f7931a2b4fab",
+                            "nombre": "60 del Chef",
+                            "descripcion": " Disfruta de 60 piezas: 10 fritas con kanikama, cebollín y queso. 10 fritas con pollo y queso crema. 10 envueltas en palta con camarón furai y queso crema. 10 hosomaki con queso y pepino. 10 envueltas en sésamo tostado con kanikama, palta y queso crema. 10 envueltas en ciboulete con palta y queso crema. Incluye: ✅ 4 pares de palitos. ✅ 2 soya (2 oz c/u). ✅ 1 salsa estilo teriyaki especial (1.5 oz). ¡Perfecto para compartir! 🍱✨",
+                            "precioEfectivo": 10000,
+                            "precioTransferenciaTarjeta": 12000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "bd6565ec-70b2-41c8-8870-13c5a10308d0",
+                            "nombre": "70 del Chef",
+                            "descripcion": "Disfruta de 60 piezas: 10 fritas con kanikama, cebollín y queso. 10 fritas con pollo y queso crema. 10 envueltas en palta con pollo, cebollin y queso crema. 20 hosomaki con queso y pepino. 10 envueltas en sésamo tostado con kanikama, palta y queso crema. 10 envueltas en ciboulete con palmito, palta y queso crema. Incluye: ✅ 4 pares de palitos. ✅ 2 soya (2 oz c/u). ✅ 1 salsa estilo teriyaki especial (1.5 oz). ¡Perfecto para compartir! 🍱✨",
+                            "precioEfectivo": 10000,
+                            "precioTransferenciaTarjeta": 12000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "008f491b-ae9c-4acf-8a18-727b6680a647",
+                            "nombre": "100 del Chef",
+                            "descripcion": "Disfruta de 100 piezas: 20 fritas con kanikama, cebollín y queso. 20 fritas con pollo y queso crema. 10 fritas futomaki con cebollin y queso crema. 10 envueltas en palta con camarón furai y queso crema. 10 envueltas en queso crema kanikama cebollin, 10 envueltas en sésamo tostado con pollo, cebollin y queso crema. 10 futomaki con palta y queso crema. 10 hosomaki pepino queso crema.    Incluye: ✅ 4 pares de palitos. ✅ 2 soya (2 oz c/u). ✅ 1 salsa estilo teriyaki especial (1.5 oz). ¡Perfecto para compartir! 🍱✨",
+                            "precioEfectivo": 10000,
+                            "precioTransferenciaTarjeta": 12000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                },
+                {
+                    "id": "343be020-217e-4e16-9ae9-5335ccfa71b9",
+                    "nombre": "Promos VIP",
+                    "productos": [
+                        {
+                            "id": "f80a943f-7357-4972-9945-1c3136d6167e",
+                            "nombre": "20 VIP",
+                            "descripcion": "Promoción VIP 20: Disfruta de una selección especial de sabores: 10 piezas fritas en panko, rellenas de pollo, cebollin y queso crema. 10 piezas envueltas en palta o queso crema, con camarón, palta y queso crema, decoradas con un toque de salsa unagi. Incluye una porción de salsa de soya (2 oz), salsa agridulce estilo teriyaki (1.5 oz), un par de palitos, jengibre encurtido y wasabi. ¡Una opción deliciosa ideal para compartir o disfrutar solo!",
+                            "precioEfectivo": 7000,
+                            "precioTransferenciaTarjeta": 8000,
+                            "foto": "assets/img/productos/piezas.webp"  
+                        },
+                        { 
+                            "id": "a38ae437-825c-4b4e-a6f2-797d791fd6b1",
+                            "nombre": "30 VIP",
+                            "descripcion": "Promoción VIP 30 Descubre una combinación irresistible de sabores: 10 piezas fritas en panko, rellenas de pollo, cebollín y queso crema. 10 piezas envueltas en sésamo tostado, con camarón, palta y queso crema. 10 piezas envueltas en palta o queso crema, con salmón fresco y queso crema, decoradas con un toque de salsa unagi. Incluye  Dos par de palitos, una porción de salsa de soya (2 oz), salsa agridulce estilo teriyaki (1.5 oz), jengibre encurtido y wasabi. ¡Perfecta para quienes buscan una experiencia única y deliciosa",
+                            "precioEfectivo": 10000,
+                            "precioTransferenciaTarjeta": 11000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "fae6ebcd-6b1c-435d-8d36-b604f8afb083",
+                            "nombre": "40 VIP",
+                            "descripcion": "Deléitate con 40 piezas exclusivas llenas de sabor y textura: 10 piezas fritas en panko, crujientes y doradas, con un delicioso relleno de kanikama, cebollín y queso, creando una combinación ligera y sabrosa. 10 piezas fritas en panko, suaves por dentro con pollo, palta y queso, que ofrecen el balance perfecto entre crocancia y frescura. 10 piezas envueltas en sésamo, con camarón, palta y queso, brindando un toque de frescura y un sabor delicado que se fusiona en cada bocado. 10 piezas envueltas en palta o queso crema, rellenas de salmón Fresco y queso crema, con un toque de salsa Unagi. Cada porción incluye 2 pares de palitos, soya de 2 oz, salsa agridulce de 1.5 oz, gengibre y wasabi para que tu experiencia sea aún más completa.",
+                            "precioEfectivo": 18000,
+                            "precioTransferenciaTarjeta": 20000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "36b60f6d-fb00-4ae3-84f6-5d6080733d43",
+                            "nombre": "50 VIP",
+                            "descripcion": "50 piezas VIP",
+                            "precioEfectivo": 18000,
+                            "precioTransferenciaTarjeta": 20000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "ae1d6e86-765c-4171-a4a9-e7cbadcc4cf9",
+                            "nombre": "60 VIP",
+                            "descripcion": "60 piezas VIP",
+                            "precioEfectivo": 18000,
+                            "precioTransferenciaTarjeta": 20000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "c89e0209-ab46-40a4-b5f2-55d40d2088e8",
+                            "nombre": "80 VIP",
+                            "descripcion": "80 piezas VIP",
+                            "precioEfectivo": 18000,
+                            "precioTransferenciaTarjeta": 20000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "51d793fe-a180-43d6-8efa-5ad24b473dc9",
+                            "nombre": "120 VIP",
+                            "descripcion": "120 piezas VIP",
+                            "precioEfectivo": 18000,
+                            "precioTransferenciaTarjeta": 20000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                },
+                {
+                    "id": "8b7317a2-139d-41a0-a4c9-a8a0c3d00240",
+                    "nombre": "Promos Premium",
+                    "productos": [
+                        {
+                            "id": "0604dee1-bc68-4325-8a2c-1970282cf94b",
+                            "nombre": "20 Premium",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "338cd68f-3904-42c4-a1df-fdf448890ddc",
+                            "nombre": "30 Premium",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "a4c1609f-2a2d-4521-aba2-082e5709ef6f",
+                            "nombre": "40 Premium",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "bb68db9c-0573-4992-a657-08d3ebf53dfc",
+                            "nombre": "50 Premium",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                },
+                {
+                    "id": "48d2867c-543a-468a-a1be-56f34f19a3d8",
+                    "nombre": "Promos Hot",
+                    "productos": [
+                        {
+                            "id": "4ce112a6-5e9c-49b7-a919-d17f736f3d05",
+                            "nombre": "10 Hot",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "7ebc9611-4055-427c-8f53-6fd1adb61403",
+                            "nombre": "20 Hot",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "857479b1-49da-4844-baf9-85cf2e119aa4",
+                            "nombre": "30 Hot",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "789fbfca-4b9e-4259-b46e-6160c4a2dd3b",
+                            "nombre": "40 Hot",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "754f1786-be02-46b0-8106-fa2b245c8dcd",
+                            "nombre": "50 Hot",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "ff123c79-2fd4-4865-9387-ea2b1c7d981f",
+                            "nombre": "70 Hot",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                },
+                {
+                    "id": "0f21df66-63a7-4128-bedc-3dcf09ee743b",
+                    "nombre": "Promos Veggie",
+                    "productos": [
+                        {
+                            "id": "f2522bff-d454-4d4b-bff3-2bf7b1455cd3",
+                            "nombre": "20 Veggie",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "03af4a3f-2053-47ea-80a7-f13d3ef6168c",
+                            "nombre": "30 veggies",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "200191ef-f4e7-4ab0-980a-e8cca4a04c59",
+                            "nombre": "40 Veggies",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "9283e41c-5476-48bd-b6a9-b3552a257bfb",
+                            "nombre": "50 Veggie",
+                            "descripcion": "100 piezas Premium",
+                            "precioEfectivo": 25000,
+                            "precioTransferenciaTarjeta": 30000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "b906332a-99f7-4792-a334-e340e61d99b8",
+            "imagen": "assets/img/logo/categorias/roll.png",
+            "nombre": "A la Carta",
+            "subcategorias": [
+                {
+                    "id": "d2862c72-a2ed-461d-8e1f-1a7d6471dc1c",
+                    "nombre": "California Rolls",
+                    "productos": [
+                        {
+                            "id": "ac7ffe4b-de3e-46d6-9d3d-b26023049d3b",
+                            "nombre": "Rollito de salmón",
+                            "descripcion": "Rollito de salmón",
+                            "precioEfectivo": 5000,
+                            "precioTransferenciaTarjeta": 9000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                },
+                {
+                    "id": "9e7a43e6-3d88-4382-9826-33056232d856",
+                    "nombre": "Rolls especiales",
+                    "productos": [
+                        {
+                            "id": "b906332a-55f7-4792-a334-e340e61d27b8",
+                            "nombre": "Rollito de langostinos",
+                            "descripcion": "Rollito de langostinos",
+                            "precioEfectivo": 8000,
+                            "precioTransferenciaTarjeta": 12000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "c5400f28-5c14-4a14-b884-0869b6300a92",
+            "imagen": "assets/img/logo/categorias/roll.png",
+            "nombre": "Hand Rolls",
+            "subcategorias": [
+                {
+                    "id": "06d0f70c-ea2f-4eed-baa3-20b70710d1f7",
+                    "nombre": "Hand Rolls clásicos",
+                    "productos": [
+                        {
+                            "id": "70fce615-c9b4-487c-8e9f-f80bc56cd49d",
+                            "nombre": "Hand Roll Pollo Queso",
+                            "descripcion": "Hand Roll de Pollo y queso crema. Frito en Panko. Incluye Soya o Agridulce",
+                            "precioEfectivo": 2600,
+                            "precioTransferenciaTarjeta": 2990,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "d57555aa-3d82-425e-b4dc-974676928001",
+                            "nombre": "Hand Roll Camaron Queso",
+                            "descripcion": "Hand Roll de Camaron y queso crema. Frito en Panko. Incluye Soya o Agridulce",
+                            "precioEfectivo": 2600,
+                            "precioTransferenciaTarjeta": 2990,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "1aaff0cc-c2d6-4e7d-8b80-d7f5326151be",
+                            "nombre": "Hand Roll Kanikama Queso",
+                            "descripcion": "Hand Roll de Kanikama y queso crema. Frito en Panko. Incluye Soya o Agridulce",
+                            "precioEfectivo": 2600,
+                            "precioTransferenciaTarjeta": 2990,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "e22e72e4-9088-45ab-9633-1b12fa04caf6",
+                            "nombre": "Hand Roll Vegetariano Queso",
+                            "descripcion": "Hand Roll Vegetariano y queso crema. Frito en Panko Vegetales a eleccion. Incluye Soya o Agridulce",
+                            "precioEfectivo": 2600,
+                            "precioTransferenciaTarjeta": 2990,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "bcbca844-1349-498e-a482-743f7a519b3f",
+                            "nombre": "Hand Roll Pollo, cebollin, Queso",
+                            "descripcion": "Hand Roll de Pollo,  Cebollin y queso crema. Frito en Panko. Incluye Soya o Agridulce",
+                            "precioEfectivo": 3200,
+                            "precioTransferenciaTarjeta": 3690,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "f6a79076-f090-4703-a572-6706d1bba628",
+                            "nombre": "Hand Roll Camaron, cebollin, Queso",
+                            "descripcion": "Hand Roll de Camaron, Cebollin y queso crema. Frito en Panko. Incluye Soya o Agridulce",
+                            "precioEfectivo": 3200,
+                            "precioTransferenciaTarjeta": 3690,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "90b6d339-c01d-413f-ac32-8ce397a6022a",
+                            "nombre": "Hand Roll Kanikama, cebollin, Queso",
+                            "descripcion": "Hand Roll de Kanikama, Cebollin y queso crema. Frito en Panko. Incluye Soya o Agridulce",
+                            "precioEfectivo": 3100,
+                            "precioTransferenciaTarjeta": 3590,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "504f31c4-d2ac-4a63-bd53-a4c52090956c",
+                            "nombre": "Hand Roll Vegetariano, cebollin, Queso",
+                            "descripcion": "Hand Roll Vegetariano, Cebollin y queso crema. Frito en Panko Vegetales a eleccion. Incluye Soya o Agridulce",
+                            "precioEfectivo": 3200,
+                            "precioTransferenciaTarjeta": 3690,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                },
+                {
+                    "id": "d4b82efc-9e08-496f-8e9b-bdf76abb46da",
+                    "nombre": "Hand Rolls Frios",
+                    "productos": [
+                        {
+                            "id": "7c25e6bc-e33a-4717-8bd6-109ca9785995",
+                            "nombre": "Rollito de langostinos",
+                            "descripcion": "Rollito de langostinos",
+                            "precioEfectivo": 8000,
+                            "precioTransferenciaTarjeta": 12000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                },
+                {
+                    "id": "d93f495b-afd1-491b-b976-07a046939873",
+                    "nombre": "Promos Hand Rolls",
+                    "productos": [
+                        {
+                            "id": "57023591-6215-4eec-ab6e-b6affd9984cd",
+                            "nombre": "Rollito de langostinos",
+                            "descripcion": "Rollito de langostinos",
+                            "precioEfectivo": 8000,
+                            "precioTransferenciaTarjeta": 12000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "96ff485c-939e-45cb-9e1b-5543fad22941",
+            "imagen": "assets/img/logo/categorias/picar.jpg",
+            "nombre": "Tentempie",
+            "subcategorias": [
+                {
+                    "id": "baf83260-5683-4003-b920-be8b14a0efef",
+                    "nombre": "Gyoza",
+                    "productos": [
+                        {
+                            "id": "f6678ad3-5723-4a55-91c4-75d665a7983d",
+                            "nombre": "Gyoza de Cerdo",
+                            "descripcion": "Rica gyozas de cerdo",
+                            "precioEfectivo": 2000,
+                            "precioTransferenciaTarjeta": 5000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "24f3c43e-055c-408d-8878-149cbf68cef7",
+                            "nombre": "Gyoza de Pollo",
+                            "descripcion": "Rica gyozas de cerdo",
+                            "precioEfectivo": 2000,
+                            "precioTransferenciaTarjeta": 5000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "af8aa1ea-6572-4ccd-b461-e2b1bdb67d3c",
+                            "nombre": "Gyoza de Camaron",
+                            "descripcion": "Rica gyozas de cerdo",
+                            "precioEfectivo": 2000,
+                            "precioTransferenciaTarjeta": 5000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                },
+                {
+                    "id": "",
+                    "nombre": "Arrolladitos",
+                    "productos": [
+                        {
+                            "id": "169a9ec4-e3ab-4d6c-88ef-df74b27ca545",
+                            "nombre": "Arrollados Primavera 5 Unid",
+                            "descripcion": "",
+                            "precioEfectivo": 2000,
+                            "precioTransferenciaTarjeta": 5000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "825dddb2-0ca5-4b08-9ef0-59a00e8b76af",
+                            "nombre": "Mini Arrollados Primavera 10 Unid",
+                            "descripcion": "",
+                            "precioEfectivo": 2000,
+                            "precioTransferenciaTarjeta": 5000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                },
+                {
+                    "id": "7340320b-365e-44e4-bc8d-a08fc33644ef",
+                    "nombre": "Empanadas",
+                    "productos": [
+                        {
+                            "id": "c1b68764-8592-431a-9a90-3e3eb92e347e",
+                            "nombre": "Empanadas de Queso (Media Luna) 10 Unid",
+                            "descripcion": "",
+                            "precioEfectivo": 2000,
+                            "precioTransferenciaTarjeta": 3590,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "6aeec6ce-e6bf-4c5d-80db-4a39601e864c",
+                            "nombre": "Empanadas de Queso (Media Luna) 5 Unid",
+                            "descripcion": "",
+                            "precioEfectivo": 2000,
+                            "precioTransferenciaTarjeta": 1990,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "436f7423-d8cf-493b-b2dc-986bc5fcd1d7",
+                            "nombre": "Empanadas de Queso (Cocktail) 20 Unid",
+                            "descripcion": "",
+                            "precioEfectivo": 3390,
+                            "precioTransferenciaTarjeta": 3990,
+                            "foto": "assets/img/productos/piezas.webp"
+                        },
+                        {
+                            "id": "f3f7b388-9769-4c1e-ac3f-95a701eb043b",
+                            "nombre": "Empanadas de Queso (Cocktail) 10 Unid",
+                            "descripcion": "",
+                            "precioEfectivo": 1950,
+                            "precioTransferenciaTarjeta": 2290,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "936da01f-9abd-4d9d-80c7-02af85c933z7",
+            "imagen": "assets/img/logo/imagen.jpg",
+            "nombre": "Extras",
+            "subcategorias": [
+                {
+                    "id": "afb5f126-33f1-48b8-9041-f5763d4b05eb",
+                    "nombre": "Soyas",
+                    "productos": [
+                        {
+                            "id": "w901973a-55f7-1492-x343-a034a61d72y8",
+                            "nombre": "Soya 3oz",
+                            "descripcion": "Soya 3oz",
+                            "precioEfectivo": 800,
+                            "precioTransferenciaTarjeta": 1000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "f80a943f-7357-4972-9945-1b3136d9354e",
+            "imagen": "assets/img/logo/categorias/bebestibles.png",
+            "nombre": "Bebestibles",
+            "subcategorias": [
+                {
+                    "id": "z906332a-55z7-4792-z334-z340z61z27b1",
+                    "nombre": "Jugos",
+                    "productos": [
+                        {
+                            "id": "936da01f-9abd-4d9d-80c7-02ah57c992z0",
+                            "nombre": "Jugo de naranja",
+                            "descripcion": "Jugo de naranja",
+                            "precioEfectivo": 2000,
+                            "precioTransferenciaTarjeta": 5000,
+                            "foto": "assets/img/productos/piezas.webp"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

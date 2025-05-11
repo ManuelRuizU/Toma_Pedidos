@@ -1,110 +1,168 @@
+/*assets/css/cart.css*/
 
+/* Estilo general del botón flotante del carrito */
 .cart-button {
     position: fixed;
-    bottom: 20px;
+    bottom: 50px;
     right: 20px;
-    z-index: 1000;
+    z-index: 1050;
     padding: 15px;
     font-size: 20px;
     background-color: orangered;
     color: #ffffff;
     border-radius: 50%;
-    transition: transform 0.3s ease-in-out;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease; /* Transición suave */
 }
 
+/* Efecto al pasar el mouse (hover) */
 .cart-button:hover {
     transform: scale(1.1);
+    background-color: #ff7f32; /* Cambio suave de color de fondo */
 }
 
+/* Efecto al hacer clic (activo) */
+.cart-button:active {
+    transform: scale(1.05); /* Disminuir un poco el tamaño durante el clic */
+    background-color: #e26d2b; /* Color más oscuro al hacer clic */
+}
+
+/* Restaurar el color después de hacer clic (esto debería solucionar el problema) */
+.cart-button:focus,
+.cart-button:active {
+    background-color: orangered; /* Asegura que el color original se mantenga después de hacer clic */
+}
+
+/* Ajuste del icono del carrito */
+.cart-button i {
+    font-size: 15px;
+    transition: transform 0.2s ease; /* Transición para el icono */
+}
+
+/* Efecto adicional cuando se pasa el mouse */
+.cart-button:hover i {
+    transform: rotate(15deg); /* Gira ligeramente el icono cuando se pasa el mouse */
+}
+
+/* Sidebar del carrito */
 .cart-sidebar {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    overflow-y: auto; /* Permite desplazamiento si el contenido es extenso */
+    overflow-x: hidden;
+    background-color: #ffffff; /* Asegura un fondo consistente */
+    width: 300px; /* Ajusta el ancho si es necesario */
 }
 
+/* Clase para mostrar el sidebar */
 .cart-sidebar.show {
     right: 0;
 }
 
+/* Encabezado del carrito */
 .cart-header {
     background-color: #ff5405;
-    color: #fff;
+    color: #ffffff; /* Contraste adecuado */
     text-align: center;
     padding: 10px;
     border-bottom: 1px solid #ccc;
+    font-size: 1.2rem; /* Tamaño de fuente consistente */
 }
 
+/* Contenido del carrito */
 .cart-content {
     padding: 20px;
     background-color: #ffffff;
 }
 
-/* Ajuste para los elementos del carrito */
+/* Contenedor de cada producto */
 .cart-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 1rem;
-  }
-  
-  /* Nombre del producto alineado a la izquierda */
-  .item-name {
-    flex: 2;
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+    flex-wrap: nowrap; /* Asegura que los elementos no se desborden */
+}
+
+/* Nombre del producto alineado a la izquierda */
+.item-name {
+    flex-grow: 2;
     font-weight: bold;
     text-align: left;
-  }
-  
-  /* Controles de cantidad al centro */
-  /* Controles de cantidad al centro con espaciado */
+    color: #333; /* Mejora la legibilidad */
+    min-width: 50px; /* Controla el espacio mínimo */
+    margin-right: 10px;
+}
+
+/* Controles de cantidad */
 .item-controls {
     display: flex;
     align-items: center;
+    gap: 5px; /* Espaciado entre botones */
+}
+
+.item-controls button {
+    width: 30px;
+    height: 30px;
+    display: flex;
     justify-content: center;
-    gap: 10px; /* Espaciado entre los botones y la cantidad */
-  }
-  
-  /* Botones de cantidad más pequeños usando el estilo original */
-  .btn-outline-primary {
+    align-items: center;
+}
+
+/* Botones de cantidad */
+.btn-outline-primary {
     color: #ff5405;
-    border-color: #ff5405;
+    border: 1px solid #ff5405;
+    background-color: transparent;
     transition: background-color 0.3s ease;
-    width: 30px; /* Ajusta el ancho */
-    height: 30px; /* Ajusta la altura */
-    font-size: 0.8rem; /* Reduce el tamaño de la fuente */
+    width: 30px;
+    height: 30px;
+    font-size: 0.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5px; /* Mantiene bordes redondeados */
-    padding: 0; /* Elimina el relleno extra */
-  }
-  
-  /* Botón al pasar el cursor */
-  .btn-outline-primary:hover {
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 2px;
+}
+
+/* Botón al pasar el cursor */
+.btn-outline-primary:hover {
     background-color: #ff5405;
-    border-color: #ff5405;
     color: white;
-  }
-  
-  /* Cantidad mostrada entre los botones */
-  .item-quantity {
+}
+
+/* Cantidad entre los botones */
+.item-quantity {
     font-weight: bold;
     font-size: 1rem;
     color: #333;
-    width: 35px; /* Mantiene espacio suficiente para los números */
+    width: 35px;
     text-align: center;
-  }
-  
-  /* Espaciado adicional para el precio unitario y el subtotal */
-  .item-price {
-    margin-right: 10px; /* Espaciado a la derecha del precio */
+}
+
+/* Estilo para precio y subtotal */
+.item-price,
+.item-subtotal {
+    font-weight: bold;
     text-align: right;
+    min-width: 90px; /* Evita que los precios se desborden */
+    max-width: 200px;
+    flex-shrink: 0; /* Evita que los elementos se reduzcan */
+}
+
+/* Precio unitario */
+.item-price {
     color: #ff5405;
-  }
-  
-  .item-subtotal {
-    margin-left: 10px; /* Espaciado a la izquierda del subtotal */
-    text-align: right;
+    margin-right: 5px;
+}
+
+/* Subtotal */
+.item-subtotal {
     color: #333;
-  }
-  
+    min-width: 90px; /* Asegura que el subtotal tenga espacio fijo */
+    margin-left: auto;
+}
+
+

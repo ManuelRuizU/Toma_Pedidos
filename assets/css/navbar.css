@@ -1,27 +1,52 @@
 
 /* NAVBAR */
 .navbar {
-    background-color: rgba(255, 255, 255, 0);
-    transition: background-color 0.3s ease;
-    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.8);  /* Fondo transparente al inicio */
+    transition: background-color 0.3s ease;  /* Transición suave para el cambio de fondo */
+    box-shadow: none;  /* Sin sombra por defecto */
+    position: fixed;  /* Fija el navbar en la parte superior */
+    width: 100%;  /* Asegura que ocupe todo el ancho */
+    top: 0;  /* Lo posiciona en la parte superior */
+    left: 0;
+    z-index: 1040;  /* Asegura que esté sobre otros elementos */
 }
 
 .navbar.scrolled {
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.9);  /* Fondo blanco semitransparente cuando se desplaza */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra sutil cuando se desplaza */
 }
 
 .navbar-toggler-icon {
-    border: none;
-    width: 2rem;
-    height: 2rem;
+    border: none;  /* Elimina bordes innecesarios */
+    width: 2rem;  /* Ancho del icono */
+    height: 2rem;  /* Alto del icono */
+    background-color: #ff5405;  /* Color del icono */
+    display: block;  /* Asegura que el icono sea visible */
 }
 
 .navbar-toggler {
-    padding: auto;
-    border-color: #ff5405;
+    padding: 0.5rem;  /* Espaciado mejorado alrededor del icono */
+    border-color: #ff5405;  /* Color del borde del toggle */
+    transition: transform 0.3s ease;  /* Transición para el botón del toggle */
 }
 
-.navbar-toggler-icon {
-    background-color: #ff5405;
+.navbar-toggler:hover {
+    transform: scale(1.1);  /* Efecto de escala al pasar el cursor */
+    background-color: #ff7d47;  /* Fondo del toggle al pasar el cursor */
+}
+
+
+
+/* Responsivo: en pantallas pequeñas, mostramos 2 elementos por fila */
+@media (max-width: 768px) {
+    #navbarCategories {
+        display: grid; /* Cambiamos a grid para controlar las columnas */
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas de igual tamaño */
+        gap: 10px; /* Espaciado entre los elementos */
+    }
+
+    /* Aseguramos que los elementos no se desborden */
+    #navbarCategories .nav-item {
+        width: 100%; /* 100% dentro del grid */
+    }
 }

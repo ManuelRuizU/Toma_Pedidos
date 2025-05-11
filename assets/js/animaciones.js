@@ -5,56 +5,29 @@ function mostrarMensajeCarrito() {
     const button = document.getElementById('cart-button');
     if (!button) return;
 
-    for (let i = 0; i < 5; i++) {
-        const heart = document.createElement('img');
-        heart.classList.add('heart-animation');
-        heart.src = 'assets/img/icono/santa-claus.png';
+    const rect = button.getBoundingClientRect();
+    const delayIncrement = 200; // Retraso entre cada ícono en milisegundos
 
-        const rect = button.getBoundingClientRect();
-        heart.style.position = 'fixed';
-        heart.style.left = `${rect.left + rect.width / 2}px`;
-        heart.style.top = `${rect.top}px`;
+    for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+            const icon = document.createElement('img');
+            icon.classList.add('icon-animation');
+            icon.src = 'assets/img/icono/santa-claus.png'; // Ruta del ícono
 
-        heart.animate(
-            [
-                { transform: 'translateY(0)', opacity: 1 },
-                { transform: 'translateY(-50px)', opacity: 0 }
-            ],
-            {
-                duration: 1200,
-                easing: 'ease-out',
-            }
-        );
+            // Posicionar el ícono cerca del botón
+            icon.style.position = 'fixed';
+            icon.style.left = `${rect.left + rect.width / 2 + (Math.random() * 20 - 10)}px`; // Variación horizontal
+            icon.style.top = `${rect.top + (Math.random() * 10 - 5)}px`; // Variación vertical
 
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 1200);
+            // Añadir animación al ícono
+            document.body.appendChild(icon);
+
+            // Remover el ícono después de 1.2 segundos (ajustado al tiempo de la animación CSS)
+            setTimeout(() => icon.remove(), 1200);
+        }, i * delayIncrement); // Retraso progresivo para cada ícono
     }
 }
 
-// Mostrar corazones animados desde un botón
-function showHearts(button) {
-    const heart = document.createElement('div');
-    heart.classList.add('heart-animation');
-    heart.innerHTML = '❤️';
 
-    const rect = button.getBoundingClientRect();
-    heart.style.left = `${rect.left + rect.width / 2}px`;
-    heart.style.top = `${rect.top - 10}px`;
 
-    heart.animate(
-        [
-            { transform: 'translateY(0)', opacity: 1 },
-            { transform: 'translateY(-50px)', opacity: 0 }
-        ],
-        {
-            duration: 1000,
-            easing: 'ease-out'
-        }
-    );
-
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 1000);
-}
-
-// Exportar funciones de animación
-export { mostrarMensajeCarrito, showHearts };
+export { mostrarMensajeCarrito };

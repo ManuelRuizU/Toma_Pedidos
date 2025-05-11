@@ -1,0 +1,63 @@
+/* assets/css/modal_whatsapp.css */
+
+/* Fondo del modal */
+.modal-backdrop {
+    z-index: 1040;  /* Asegura que el fondo esté detrás del modal */
+    background-color: rgba(0, 0, 0, 0.5);  /* Mejor manejo de fondo transparente */
+}
+
+/* Estilo del modal principal */
+.modal {
+    z-index: 1050;  /* Coloca el modal encima del fondo */
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;  /* Suaviza la aparición */
+}
+
+.modal.show {
+    opacity: 1;  /* Hace visible el modal cuando se muestra */
+}
+
+/* Animación de desvanecimiento */
+.modal.fade-out {
+    opacity: 0;  /* Oculta el modal */
+    transition: opacity 0.5s ease;  /* Controla la duración y suavidad */
+}
+
+/* Fondo del modal con transición */
+.modal-backdrop.fade {
+    opacity: 0;  /* Empieza transparente */
+    transition: opacity 0.3s ease-in-out;  /* Efecto de desvanecimiento */
+}
+
+.modal-backdrop.show {
+    opacity: 0.5;  /* Ajusta la opacidad final para mayor claridad */
+}
+
+/* Contenido del modal */
+.modal-content {
+    border-radius: 10px;  /* Bordes redondeados suaves */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  /* Sombra sutil */
+    background-color: #fff;  /* Asegura un fondo blanco para el contenido */
+}
+
+/* Encabezado del modal */
+.modal-header {
+    background-color: #f8d7da;  /* Fondo de advertencia suave */
+    color: #721c24;  /* Texto en rojo oscuro para contraste */
+    padding: 15px;  /* Espaciado consistente */
+    border-bottom: 1px solid #f1b0b7;  /* Borde inferior sutil */
+}
+
+/* Cuerpo del modal */
+.modal-body {
+    padding: 15px;  /* Espaciado interno */
+}
+
+.modal-body p {
+    margin: 0;  /* Elimina el margen predeterminado */
+    padding: 5px 0;  /* Espaciado entre párrafos */
+    color: #333;  /* Color de texto neutro */
+    font-size: 1rem;  /* Tamaño de fuente legible */
+}
+
+

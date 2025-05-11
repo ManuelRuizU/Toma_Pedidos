@@ -195,3 +195,5 @@ function handleFilterSubmit(event) {
 
 // Exportar funciones si necesitas reutilizarlas
 export { renderSubcategories, initializeFilters, applyFilters };
+
+

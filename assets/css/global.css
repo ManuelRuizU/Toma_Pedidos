@@ -1,10 +1,30 @@
 
+/* Estilo global del cuerpo */
 body {
     font-family: Arial, sans-serif;
     background-image: url(../img/textura5.jpg);
     background-attachment: fixed;
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+    margin: 0; /* Elimina el margen predeterminado */
+    padding: 0; /* Asegura que no haya espacio adicional */
+    color: #333; /* Color base para el texto */
+    position: relative; /* Necesario para el overlay */
 }
 
+body::before {
+    content: "";
+    position: fixed; /* Asegura que la capa cubra toda la pantalla */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /*background-color: rgba(255, 255, 0, 0.5); /* Azul marino con transparencia */
+    pointer-events: none; /* Permite interactuar con el contenido debajo */
+    z-index: 0; /* Mantiene la capa detrás del contenido */
+}
+
+
+/* Estilos de la fuente Poppins */
 .poppins-thin {
     font-family: "Poppins", sans-serif;
     font-weight: 100;
@@ -25,29 +45,67 @@ body {
     font-weight: 400;
 }
 
+/* Contenedor con fondo especial */
 .fondo {
     padding-top: 20px;
-    background-color: none;
-    color: #ffffff;
+    background-color: transparent; /* 'none' no es válido, se usa 'transparent' */
+    color: #ffffff; /* Asegura legibilidad sobre fondo oscuro */
 }
 
+/* Contenedor principal */
 .main-container {
     margin-top: 80px;
+    padding: 20px; /* Añade relleno para mejor separación */
 }
 
+/* Contenedor de productos */
 .products-container {
     padding: 20px 0;
 }
 
+/* Tarjeta individual de producto */
 .product {
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 15px; /* Mayor espacio interior para mejor visualización */
     margin: 10px;
     text-align: center;
-    background-color: #fff;
+    background-color: #ffffff;
+    border-radius: 8px; /* Bordes redondeados para un diseño más moderno */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: transform 0.3s ease; /* Efecto suave al interactuar */
 }
 
+.product:hover {
+    transform: translateY(-5px); /* Efecto de elevación al pasar el cursor */
+}
+
+/* Imagen dentro de la tarjeta de producto */
 .product img {
     max-width: 100%;
     height: auto;
+    border-radius: 8px; /* Alineado con los bordes de la tarjeta */
+}
+
+.titulo_home{
+    color: #f7e202;
+    z-index: 1050;
+}
+
+.category h2 {
+    color: #fff; /* Color del texto */
+    font-size: 2rem;
+    position: relative; /* Necesario para que z-index funcione */
+    z-index: 10; /* Asegura que esté sobre otros elementos */
+    padding: 0.5rem 1rem; /* Espaciado interno */
+    margin: 0 auto; /* Opcional: Centrar el título */
+    text-align: center; /* Opcional: Centrar el texto */
+}
+
+.subcategory-title  {
+    color: #ffff; /* Texto blanco */
+    font-size: 1.2rem; /* Tamaño del subtítulo */
+    position: relative; /* Para usar z-index */
+    z-index: 10; /* Sobre otros elementos */
+    margin: 10px 0; /* Separación con otros elementos */
+    text-align: center; /* Alineación del texto */
 }

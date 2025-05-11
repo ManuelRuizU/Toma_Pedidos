@@ -18,17 +18,37 @@ function renderNavbar(categorias) {
 
     // Agregar imagen de categoría (si tiene)
     if (categoria.imagen) {
+      // Crear el contenedor circular
+      const imgContainer = document.createElement('div');
+    
+      // Estilos para el contenedor circular
+      imgContainer.style.width = '80px'; // Ancho del círculo
+      imgContainer.style.height = '80px'; // Alto del círculo
+      imgContainer.style.borderRadius = '50%'; // Crear círculo
+      imgContainer.style.overflow = 'hidden'; // Imagen no se sale del círculo
+      imgContainer.style.backgroundColor = '#ff5405'; // Fondo naranja del círculo
+      imgContainer.style.display = 'flex'; // Centrar contenido
+      imgContainer.style.alignItems = 'center'; // Centrar verticalmente
+      imgContainer.style.justifyContent = 'center'; // Centrar horizontalmente
+      imgContainer.style.margin = '0 auto'; // Centrar el círculo en el contenedor padre
+    
+      // Crear la imagen
       const img = document.createElement('img');
       img.src = categoria.imagen;
       img.alt = categoria.nombre;
-      img.classList.add('img-circle');
-      img.style.width = '60px';
-      img.style.height = '60px';
-      img.style.borderRadius = '50%';
-      img.style.display = 'block';
-      img.style.margin = '0 auto';
-      navLink.appendChild(img);
+    
+      // Estilos para la imagen
+      img.style.width = '120%'; // Asegura que la imagen ocupe el ancho del círculo
+      img.style.height = '120%'; // Asegura que la imagen ocupe el alto del círculo
+      img.style.objectFit = 'cover'; // Ajusta la imagen dentro del círculo sin deformarse
+    
+      // Añadir la imagen al contenedor circular
+      imgContainer.appendChild(img);
+    
+      // Añadir el contenedor circular al enlace
+      navLink.appendChild(imgContainer);
     }
+      
 
     const span = document.createElement('span');
     span.style.display = 'block';
@@ -74,6 +94,8 @@ function renderNavbar(categorias) {
 
 // Exporta la función para que pueda ser utilizada en otros archivos
 export { renderNavbar };
+
+
 
 
 
