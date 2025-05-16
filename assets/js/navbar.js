@@ -92,7 +92,6 @@ function renderNavbar(categorias) {
   });
 }
 
-// Exporta la función para que pueda ser utilizada en otros archivos
 export { renderNavbar };
 
 

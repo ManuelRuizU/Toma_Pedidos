@@ -1,4 +1,4 @@
-
+/* responsive.css*/
 @media (max-width: 768px) {
     /* Ajusta la posición del botón del carrito en pantallas pequeñas */
     .cart-button {
@@ -27,4 +27,6 @@
         width: 70%;  /* Hace los botones del formulario más grandes y fáciles de pulsar */
     }
 }
+
+
 

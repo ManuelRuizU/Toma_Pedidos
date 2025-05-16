@@ -13,6 +13,10 @@ const cartItems = document.getElementById('cart-items-container');
 const totalElement = document.getElementById('total');
 
 // Cargar productos desde el JSON
+/**
+ * Carga los productos desde el archivo JSON.
+ * @returns {Promise} Un objeto con los productos.
+ */
 async function cargarProductos() {
     try {
         const response = await fetch('/assets/json/productos.json');
@@ -25,6 +29,9 @@ async function cargarProductos() {
 }
 
 // Sincronizar precios del carrito según el método de pago
+/**
+ * Sincroniza los precios del carrito según el método de pago seleccionado.
+ */
 async function sincronizarPreciosConMetodoPago() {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const productosData = await cargarProductos();
@@ -39,6 +46,7 @@ async function sincronizarPreciosConMetodoPago() {
             .find(prod => prod.id === item.id);
 
         if (producto) {
+            // Calcula el precio según el método de pago
             item.precio = (metodoPago === 'Tarjeta' || metodoPago === 'Transferencia')
                 ? producto.precioTransferenciaTarjeta
                 : producto.precioEfectivo;
@@ -49,6 +57,9 @@ async function sincronizarPreciosConMetodoPago() {
 }
 
 // Renderizar el carrito
+/**
+ * Renderiza el carrito y actualiza el total.
+ */
 async function renderCart() {
     await sincronizarPreciosConMetodoPago(); // Asegurar precios correctos
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -94,6 +105,11 @@ async function renderCart() {
 }
 
 // Actualizar la cantidad de un producto
+/**
+ * Actualiza la cantidad de un producto en el carrito.
+ * @param {string} id El ID del producto.
+ * @param {number} change La cantidad a sumar o restar.
+ */
 function updateQuantity(id, change) {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const productIndex = carrito.findIndex(item => item.id === id);
@@ -108,14 +124,19 @@ function updateQuantity(id, change) {
 }
 
 // Agregar un producto al carrito
-function agregarAlCarrito(id, nombre) {
+/**
+ * Agrega un producto al carrito.
+ * @param {string} id El ID del producto.
+ * @param {string} nombre El nombre del producto.
+ */
+function agregarAlCarrito(id, nombre, precioEfectivo, precioTransferenciaTarjeta) {
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const existingProduct = carrito.find(item => item.id === id);
 
     if (existingProduct) {
         existingProduct.quantity += 1;
     } else {
-        carrito.push({ id, nombre, quantity: 1 });
+        carrito.push({ id, nombre, quantity: 1, precioEfectivo, precioTransferenciaTarjeta });
     }
 
     localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -123,13 +144,19 @@ function agregarAlCarrito(id, nombre) {
     mostrarMensajeCarrito();
 }
 
-// Limpiar el carrito (ahora se renderiza para eliminar cualquier ítem extra, incluido el costo de envío)
+// Limpiar el carrito
+/**
+ * Limpia el carrito y elimina todos los productos.
+ */
 function limpiarCarrito() {
     localStorage.removeItem('carrito');
     renderCart();
 }
 
 // Mostrar/ocultar el carrito
+/**
+ * Muestra u oculta el carrito.
+ */
 function toggleCartSidebar() {
     cartSidebar.classList.toggle('show');
 }

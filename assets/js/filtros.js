@@ -1,4 +1,4 @@
-
+// filtros.js
 import { loadData } from './data.js';
 import { renderProducts } from './card.js';
 

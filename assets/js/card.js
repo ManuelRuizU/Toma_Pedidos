@@ -1,7 +1,7 @@
-
+// card.js
 import { showInfo } from './modal.js';
 import { loadData } from './data.js';
-import { renderNavbar } from './navbar.js';
+import { renderNavbar } from './navbar.js';   
 import { agregarAlCarrito } from './carrito.js';
 import { renderSubcategories, initializeFilters, applyFilters } from './filtros.js';
 
@@ -146,5 +146,3 @@ function createProductCard(producto) {
 }
 
 export { renderProducts };
-
-

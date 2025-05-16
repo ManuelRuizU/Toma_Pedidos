@@ -1,74 +1,90 @@
+//whatsapp.js
+import { showValidationModal } from './whatsapp_modal.js';
 
-import { showValidationModal, closeValidationModal } from './whatsapp_modal.js';
+// Obtiene los elementos del DOM
+function getElements() {
+    return {
+        nombre: document.getElementById('nombre'),
+        telefono: document.getElementById('telefono'),
+        direccion: document.getElementById('direccion'),
+        tipoEntrega: document.getElementById('tipoentrega'),
+        metodoPago: document.getElementById('metodopago'),
+        comentario: document.getElementById('comentario'),
+        horario: document.getElementById('horario'),
+        terminos: document.getElementById('terminos'),
+    };
+}
 
-export function enviarPedido() {
-  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-  const nombre = document.getElementById('nombre')?.value.trim();
-  const telefono = document.getElementById('telefono')?.value.trim();
-  const direccion = document.getElementById('direccion')?.value.trim();
-  const tipoEntrega = document.getElementById('tipoentrega')?.value;
-  const metodoPago = document.getElementById('metodopago')?.value;
-  const comentario = document.getElementById('comentario')?.value.trim() || 'Sin comentarios';
-  const horario = document.getElementById('horario')?.value; // Obtiene el horario seleccionado
-  const terminosAceptados = document.getElementById('terminos')?.checked;
+// Valida los campos
+function validarCampos() {
+    const { nombre, telefono, direccion, tipoEntrega, metodoPago, horario, terminos } = getElements();
+    const errores = [];
 
-  const errores = [];
+    if (!nombre.value.trim()) errores.push('Nombre');
+    if (!telefono.value.trim()) errores.push('Teléfono');
+    if (!direccion.value.trim()) errores.push('Dirección');
+    if (!tipoEntrega.value) errores.push('Método de entrega');
+    if (!metodoPago.value) errores.push('Método de pago');
+    if (!horario.value) errores.push('Horario de entrega');
+    if (!terminos.checked) errores.push('Aceptar los términos y condiciones');
 
-  // Validaciones
-  if (!nombre) errores.push('Nombre');
-  if (!telefono) errores.push('Teléfono');
-  if (!direccion) errores.push('Dirección');
-  if (!tipoEntrega) errores.push('Método de entrega');
-  if (!metodoPago) errores.push('Método de pago');
-  if (!horario) errores.push('Horario de entrega'); // Validar que el horario fue seleccionado
-  if (!terminosAceptados) errores.push('Aceptar los términos y condiciones');
-  if (carrito.length === 0) errores.push('Agregar productos al carrito');
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    if (carrito.length === 0) errores.push('Agregar productos al carrito');
 
-  // Si hay errores, mostrar el modal con los errores
-  if (errores.length > 0) {
-      showValidationModal(errores.map(error => `Falta completar: ${error}`));
-      return; // Detener la ejecución si hay errores
-  }
+    return errores;
+}
 
-  // Generar el mensaje de pedido para los productos
-  const productosTexto = carrito.map((item, index) =>
-      `${item.quantity} de ${item.nombre} X $${item.precio.toLocaleString('es-CL')} = $${(item.precio * item.quantity).toLocaleString('es-CL')}`
-  ).join('\n');
+// Genera el mensaje de pedido
+function generarMensajePedido() {
+    const { nombre, telefono, direccion, tipoEntrega, metodoPago, comentario, horario } = getElements();
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-  // Calcular el total de productos
-  const totalProductos = carrito.reduce((acc, item) => acc + item.precio * item.quantity, 0);
+    const productosTexto = carrito.map((item, index) =>
+        `${item.quantity} de ${item.nombre} X $${item.precio.toLocaleString('es-CL')} = $${(item.precio * item.quantity).toLocaleString('es-CL')}`
+    ).join('\n');
 
-  // Definir el costo de envío
-  const COSTO_ENVIO = 2000;
-  let costoEnvio = 0;
-  if (tipoEntrega === "Domicilio") {
-    costoEnvio = COSTO_ENVIO;
-  }
-  // Sumar el costo de envío al total
-  const totalConEnvio = totalProductos + costoEnvio;
+    const totalProductos = carrito.reduce((acc, item) => acc + item.precio * item.quantity, 0);
+    const COSTO_ENVIO = 2000;
+    let costoEnvio = 0;
+    if (tipoEntrega.value === "Domicilio") {
+        costoEnvio = COSTO_ENVIO;
+    }
+    const totalConEnvio = totalProductos + costoEnvio;
 
-  // Generar el mensaje de pedido incluyendo el costo de envío
-  const mensaje = `
-Hola, soy *${nombre}* y quiero realizar un pedido. A continuación, los detalles:
+    return `
+Hola, soy *${nombre.value.trim()}* y quiero realizar un pedido. A continuación, los detalles:
 
-📞 Teléfono: ${telefono}
-📍 Dirección: ${direccion}
-🚚 Tipo de Entrega: ${tipoEntrega}
-💳 Método de Pago: ${metodoPago}
-⏰ *Horario de entrega:* ${horario} (Sujeto a disponibilidad)
+📞 Teléfono: ${telefono.value.trim()}
+📍 Dirección: ${direccion.value.trim()}
+🚚 Tipo de Entrega: ${tipoEntrega.value}
+💳 Método de Pago: ${metodoPago.value}
+⏰ *Horario de entrega:* ${horario.value} (Sujeto a disponibilidad)
 
 🛒 *Productos del Carrito:*
 ${productosTexto}
 
-${tipoEntrega === "Domicilio" ? `📦 Costo de envío: $${costoEnvio.toLocaleString('es-CL')}\n` : ''}
+${tipoEntrega.value === "Domicilio" ? `📦 Costo de envío: $${costoEnvio.toLocaleString('es-CL')}\n` : ''}
 💰 *Total a pagar:* $${totalConEnvio.toLocaleString('es-CL')}
 
-📝 Comentarios adicionales: ${comentario}
+📝 Comentarios adicionales: ${comentario.value.trim() || 'Sin comentarios'}
 `;
-
-  const numeroWhatsApp = '56997075934'; // Cambia este número por el del negocio
-  const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-  window.open(url, '_blank');
 }
-  
 
+// Envía el pedido a WhatsApp
+export function enviarPedido() {
+    const errores = validarCampos();
+    if (errores.length > 0) {
+        showValidationModal(errores.map(error => `Falta completar: ${error}`));
+        return;
+    }
+
+    const mensaje = generarMensajePedido();
+    const numeroWhatsApp = '56997075934';
+    const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+    if (confirm("¿Quieres abrir WhatsApp para enviar tu pedido?")) {
+        window.open(url, '_blank');
+    } else {
+        alert("Pedido cancelado. Puedes seguir navegando en nuestra tienda.");
+    }
+}
