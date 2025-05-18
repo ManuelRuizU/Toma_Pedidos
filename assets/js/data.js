@@ -1,29 +1,30 @@
 // data.js
-// assets/js/data.js
-let cachedData = null;
-
-export function loadData() {
+let cachedData = null; // Definir la variable antes de usarla
+export async function loadData() {
     if (cachedData) {
-        return Promise.resolve(cachedData); // Retornar datos cacheados si ya están disponibles
+        return cachedData;
     }
 
-    return fetch('assets/json/productos.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error al cargar el archivo JSON: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            cachedData = data; // Guardar los datos en caché
-            return cachedData;
-        })
-        .catch(error => {
-            console.error('Error al cargar el archivo JSON:', error);
-            throw error;
-        });
-}
+    const storedData = localStorage.getItem('productos');
+    if (storedData) {
+        cachedData = JSON.parse(storedData);
+        return cachedData;
+    }
 
+    try {
+        const response = await fetch('assets/json/productos.json');
+        if (!response.ok) {
+            throw new Error(`Error al cargar el archivo JSON: ${response.statusText}`);
+        }
+        cachedData = await response.json();
+        localStorage.setItem('productos', JSON.stringify(cachedData)); // Guardar en localStorage
+        return cachedData;
+    } catch (error) {
+        console.error('Error al cargar el archivo JSON:', error);
+        alert('No se pudo cargar los productos.');
+        throw error;
+    }
+}
 
 
 

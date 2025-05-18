@@ -147,10 +147,15 @@
         </form>
       </div>
 
-      <div id="cart-actions" class="cart-actions mt-3">
-        <button class="btn btn-danger mb-2" onclick="limpiarCarrito()">Vaciar Carrito <i class="bi bi-trash3"></i></button>
-        <button class="btn btn-success w-100" onclick="enviarPedido()"><i class="bi bi-whatsapp"></i> Enviar Pedido</button>
-      </div>
+      <div id="cart-actions" class="cart-actions mt-3 d-flex justify-content-between">
+    <button class="btn btn-danger flex-grow-1 me-2" onclick="limpiarCarrito()">
+        <i class="bi bi-trash3"></i> Vaciar
+    </button>
+    <button class="btn btn-success flex-grow-1" onclick="enviarPedido()">
+        <i class="bi bi-whatsapp"></i> Enviar
+    </button>
+</div>
+
       <hr />
 
         <div class="carrito-footer-extra">
@@ -222,6 +227,7 @@
     <script type="module" src="assets/js/animaciones.js"></script>
     <script type="module" src="assets/js/modal.js"></script>
     <script type="module" src="assets/js/whatsapp.js"></script>
+    <script type="module" src="assets/js/formulario.js"></script>
     <script type="module" src="assets/js/horarios.js"></script>
 
 </body>

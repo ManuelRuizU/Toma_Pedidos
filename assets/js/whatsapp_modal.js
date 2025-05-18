@@ -1,46 +1,40 @@
 // assets/js/whatsapp_modal.js
-// Funciones del modal
+
+
+// Muestra el modal de validación con los errores detectados
 function showValidationModal(errores) {
     const modalElement = document.getElementById('validationModal');
     const modal = new bootstrap.Modal(modalElement);
     const modalBody = document.getElementById('validationModalBody');
 
-    // Formatear los errores como una lista
     modalBody.innerHTML = `
-        <strong><p>Falta completar los siguientes datos:</p></strong>
-        <ul>
-            ${errores.map(error => `<li>${error}</li>`).join('')}
+        <strong class="text-danger"><i class="bi bi-exclamation-circle-fill"></i> Error en el formulario</strong>
+        <p class="mt-2">Por favor, completa los siguientes datos antes de enviar tu pedido:</p>
+        <ul class="list-group list-group-flush">
+            ${errores.map(error => `<li class="list-group-item text-danger">${error}</li>`).join('')}
         </ul>
     `;
 
-    // Mostrar el modal
     modal.show();
-
-    // Cierre automático después de 3 segundos con desvanecimiento
-    setTimeout(() => closeValidationModal(), 5000);
 }
 
-
-
+// Cierra el modal con animación
 function closeValidationModal() {
     const modalElement = document.getElementById('validationModal');
-    const modal = bootstrap.Modal.getInstance(modalElement);
+    const modal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
 
     if (modal) {
-        // Agregar la clase para el desvanecimiento
         modalElement.classList.add('fade-out');
-
-        // Esperar a que la animación termine antes de cerrar el modal
         setTimeout(() => {
             modal.hide();
-            modalElement.classList.remove('fade-out'); // Eliminar la clase después de cerrarse
-        }, 500); // Duración de la animación en ms (debe coincidir con el CSS)
+            modalElement.classList.remove('fade-out');
+        }, 500);
     }
 }
 
-
-// Exponer funciones al ámbito global
 window.closeValidationModal = closeValidationModal;
-window.showValidationModal = showValidationModal;
 
+// Exportar funciones
 export { showValidationModal, closeValidationModal };
+
+

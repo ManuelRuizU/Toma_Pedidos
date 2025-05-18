@@ -1,22 +1,13 @@
 // assets/js/carrito.js
-// assets/js/carrito.js
-
 import { mostrarMensajeCarrito } from './animaciones.js';
 import { enviarPedido } from './whatsapp.js';
 
-// Costo fijo de envío (modifícalo según tus necesidades)
 const COSTO_ENVIO = 2000;
-
-// Variables globales
 const cartSidebar = document.getElementById('cart-sidebar');
 const cartItems = document.getElementById('cart-items-container');
 const totalElement = document.getElementById('total');
 
-// Cargar productos desde el JSON
-/**
- * Carga los productos desde el archivo JSON.
- * @returns {Promise} Un objeto con los productos.
- */
+// 🔹 Carga productos desde JSON solo cuando es necesario
 async function cargarProductos() {
     try {
         const response = await fetch('/assets/json/productos.json');
@@ -28,48 +19,30 @@ async function cargarProductos() {
     }
 }
 
-// Sincronizar precios del carrito según el método de pago
-/**
- * Sincroniza los precios del carrito según el método de pago seleccionado.
- */
-async function sincronizarPreciosConMetodoPago() {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const productosData = await cargarProductos();
+// 🔹 Sincroniza precios sin recargar datos innecesariamente
+function sincronizarPreciosConMetodoPago() {
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const metodoPago = document.getElementById('metodopago')?.value || 'Efectivo';
 
-    if (!productosData) return;
-
-    carrito.forEach((item) => {
-        const producto = productosData.categorias
-            .flatMap(categoria => categoria.subcategorias)
-            .flatMap(subcategoria => subcategoria.productos)
-            .find(prod => prod.id === item.id);
-
-        if (producto) {
-            // Calcula el precio según el método de pago
-            item.precio = (metodoPago === 'Tarjeta' || metodoPago === 'Transferencia')
-                ? producto.precioTransferenciaTarjeta
-                : producto.precioEfectivo;
-        }
+    carrito.forEach(item => {
+        item.precio = (metodoPago === 'Tarjeta' || metodoPago === 'Transferencia') 
+            ? item.precioTransferenciaTarjeta 
+            : item.precioEfectivo;
     });
 
     localStorage.setItem('carrito', JSON.stringify(carrito));
 }
 
-// Renderizar el carrito
-/**
- * Renderiza el carrito y actualiza el total.
- */
+// 🔹 Renderiza el carrito con mejor interacción
 async function renderCart() {
-    await sincronizarPreciosConMetodoPago(); // Asegurar precios correctos
+    sincronizarPreciosConMetodoPago();
     let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    carrito = carrito.filter(item => item.quantity > 0); // Eliminar productos sin cantidad
+    carrito = carrito.filter(item => item.quantity > 0);
 
     cartItems.innerHTML = '';
     let total = 0;
 
-    // Renderizar los productos del carrito
-    carrito.forEach((item) => {
+    carrito.forEach(item => {
         const subtotal = item.precio * item.quantity;
         total += subtotal;
 
@@ -87,50 +60,38 @@ async function renderCart() {
         cartItems.appendChild(cartItem);
     });
 
-    // Solo si hay productos en el carrito, se evalúa el tipo de entrega
-    let tipoEntregaEl = document.getElementById('tipoentrega');
-    let shippingCost = 0;
-    if (carrito.length > 0 && tipoEntregaEl && tipoEntregaEl.value === "Domicilio") {
-        shippingCost = COSTO_ENVIO;
-        const shippingItem = document.createElement('li');
-        shippingItem.classList.add('cart-item', 'shipping');
-        shippingItem.innerHTML = `
-            <div class="item-name">Costo de envío <small>(sujeto a confirmación)</small></div>
-            <div class="item-subtotal">$${shippingCost.toLocaleString('es-CL')}</div>`;
-        cartItems.appendChild(shippingItem);
+    if (carrito.length > 0 && document.getElementById('tipoentrega')?.value === "Domicilio") {
+        total += COSTO_ENVIO;
+        cartItems.innerHTML += `
+            <li class="cart-item shipping">
+                <div class="item-name">Costo de envío <small>(sujeto a confirmación)</small></div>
+                <div class="item-subtotal">$${COSTO_ENVIO.toLocaleString('es-CL')}</div>
+            </li>`;
     }
 
-    total += shippingCost;
     totalElement.innerText = total.toLocaleString('es-CL');
 }
 
-// Actualizar la cantidad de un producto
-/**
- * Actualiza la cantidad de un producto en el carrito.
- * @param {string} id El ID del producto.
- * @param {number} change La cantidad a sumar o restar.
- */
+// 🔹 Actualización de cantidad con menos escritura en `localStorage`
 function updateQuantity(id, change) {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const productIndex = carrito.findIndex(item => item.id === id);
 
     if (productIndex > -1) {
         carrito[productIndex].quantity += change;
         if (carrito[productIndex].quantity < 1) carrito.splice(productIndex, 1);
-    }
 
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    renderCart();
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        renderCart();
+        toggleCartSidebar(true);
+    }
 }
 
-// Agregar un producto al carrito
-/**
- * Agrega un producto al carrito.
- * @param {string} id El ID del producto.
- * @param {string} nombre El nombre del producto.
- */
+// 🔹 Agrega productos con mejor visualización
+let carritoAbierto = false; // 🔹 Variable para controlar la apertura automática
+
 function agregarAlCarrito(id, nombre, precioEfectivo, precioTransferenciaTarjeta) {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const existingProduct = carrito.find(item => item.id === id);
 
     if (existingProduct) {
@@ -142,43 +103,49 @@ function agregarAlCarrito(id, nombre, precioEfectivo, precioTransferenciaTarjeta
     localStorage.setItem('carrito', JSON.stringify(carrito));
     renderCart();
     mostrarMensajeCarrito();
+
+    // 🔹 Solo abrir el carrito la primera vez en la sesión
+    if (!carritoAbierto) {
+        toggleCartSidebar(true);
+        carritoAbierto = true;
+    }
 }
 
-// Limpiar el carrito
-/**
- * Limpia el carrito y elimina todos los productos.
- */
+
+// 🔹 Limpiar carrito con cierre suave
 function limpiarCarrito() {
     localStorage.removeItem('carrito');
     renderCart();
+    toggleCartSidebar(false);
 }
 
-// Mostrar/ocultar el carrito
-/**
- * Muestra u oculta el carrito.
- */
-function toggleCartSidebar() {
-    cartSidebar.classList.toggle('show');
+// 🔹 Mostrar/ocultar carrito con transiciones suaves
+function toggleCartSidebar(forceOpen = false) {
+    if (forceOpen || !cartSidebar.classList.contains('show')) {
+        cartSidebar.classList.add('show');
+        cartSidebar.classList.remove('hide');
+    } else {
+        cartSidebar.classList.add('hide');
+        setTimeout(() => cartSidebar.classList.remove('show'), 400); // 🔹 Espera antes de quitar 'show'
+    }
 }
 
-// Eventos
+
+// 🔹 Eventos organizados
 document.getElementById('metodopago').addEventListener('change', () => {
     renderCart();
+    toggleCartSidebar(true);
 });
 
-// Agregar listener para el cambio en el tipo de entrega para re-renderizar el carrito
-const tipoEntregaElement = document.getElementById('tipoentrega');
-if (tipoEntregaElement) {
-    tipoEntregaElement.addEventListener('change', () => {
-        renderCart();
-    });
-}
+document.getElementById('tipoentrega')?.addEventListener('change', () => {
+    renderCart();
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     renderCart();
 });
 
-// Exportar funciones
+// 🔹 Exportar funciones globales
 window.toggleCartSidebar = toggleCartSidebar;
 window.agregarAlCarrito = agregarAlCarrito;
 window.updateQuantity = updateQuantity;
@@ -186,9 +153,6 @@ window.limpiarCarrito = limpiarCarrito;
 window.enviarPedido = enviarPedido;
 
 export { agregarAlCarrito, renderCart };
-
-
-
 
 
 
