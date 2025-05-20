@@ -11,9 +11,13 @@ function generarMensajePedido() {
     const { nombre, telefono, direccion, tipoEntrega, metodoPago, comentario, horario } = getElements();
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
+    if (carrito.length === 0) {
+        return "📌 No hay productos en tu carrito. Agrega algunos para realizar tu pedido. 😊";
+    }
+
     const productosTexto = carrito.map((item) =>
-        `${item.quantity} de ${item.nombre} X $${item.precio.toLocaleString('es-CL')} = $${(item.precio * item.quantity).toLocaleString('es-CL')}`
-    ).join('\n');
+        `🛍️ ${item.quantity}x *${item.nombre}* - $${(item.precio * item.quantity).toLocaleString('es-CL')}`
+    ).join("\n");
 
     const totalProductos = carrito.reduce((acc, item) => acc + item.precio * item.quantity, 0);
     const COSTO_ENVIO = 2000;
@@ -21,25 +25,27 @@ function generarMensajePedido() {
     const totalConEnvio = totalProductos + costoEnvio;
 
     return `
-Hola, soy *${nombre.value.trim()}* y quiero realizar un pedido. A continuación, los detalles:
+¡Hola! Soy *${nombre.value.trim()}* y quiero hacer un pedido. 😃  
 
-📞 Teléfono: ${telefono.value.trim()}
-📍 Dirección: ${direccion.value.trim()}
-🚚 Tipo de Entrega: ${tipoEntrega.value}
-💳 Método de Pago: ${metodoPago.value}
-⏰ *Horario de entrega:* ${horario.value} (Sujeto a disponibilidad)
+📍 *Dirección:* ${direccion.value.trim()}  
+📞 *Teléfono:* ${telefono.value.trim()}  
+🚚 *Entrega:* ${tipoEntrega.value}  
+💳 *Pago:* ${metodoPago.value}  
+⏰ *Horario:* ${horario.value}  
 
-🛒 *Productos del Carrito:*
+🛒 *Productos en el carrito:*  
 ${productosTexto}
 
-${tipoEntrega.value === "Domicilio" ? `📦 Costo de envío: $${costoEnvio.toLocaleString('es-CL')}\n` : ''}
-💰 *Total a pagar:* $${totalConEnvio.toLocaleString('es-CL')}
+${tipoEntrega.value === "Domicilio" ? `📦 *Costo de envío:* $${costoEnvio.toLocaleString('es-CL')}\n` : ''}  
+💰 *Total a pagar:* $${totalConEnvio.toLocaleString('es-CL')}  
 
-📝 Comentarios adicionales: ${comentario.value.trim() || 'Sin comentarios'}
+📝 *Comentarios:* ${comentario.value.trim() || "Sin comentarios"}  
+
+✅ ¿Confirmamos el pedido? Espero tu respuesta. 😃  
 `;
 }
 
-// 🔹 Función para enviar el pedido a WhatsApp
+// 🔹 Optimización del envío del mensaje a WhatsApp
 export function enviarPedido() {
     const errores = validarCampos();
     if (errores.length > 0) {
@@ -47,16 +53,26 @@ export function enviarPedido() {
         return;
     }
 
-    const esMovil = /Android|iPhone|iPad/i.test(navigator.userAgent);
+    const mensajePedido = generarMensajePedido();
     const numeroWhatsApp = '56997075934';
-    const mensaje = encodeURIComponent(generarMensajePedido()); // 🔹 Usa el mensaje generado
-    const url = esMovil ? `whatsapp://send?phone=${numeroWhatsApp}&text=${mensaje}` : `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+    const mensaje = encodeURIComponent(mensajePedido);
+    const esMovil = /Android|iPhone|iPad/i.test(navigator.userAgent);
+    const url = esMovil 
+        ? `whatsapp://send?phone=${numeroWhatsApp}&text=${mensaje}` 
+        : `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
 
-    // 🔹 Solo abrir WhatsApp si el usuario confirma
-    if (confirm("¿Quieres abrir WhatsApp para enviar tu pedido?")) {
-        window.location.href = url; // 🔹 Se ejecuta SOLO después de confirmar
+    // 🔹 Si está en móvil, abrir directamente la app de WhatsApp
+    if (esMovil) {
+        window.location.href = url;
     } else {
-        alert("Pedido cancelado. Puedes seguir navegando en nuestra tienda.");
+        // 🔹 En PC, preguntar antes de abrir WhatsApp Web
+        if (confirm("¿Quieres abrir WhatsApp para enviar tu pedido?")) {
+            window.open(url, '_blank');
+        } else {
+            alert("Pedido cancelado. Puedes seguir navegando en nuestra tienda.");
+        }
     }
 }
+
+
 

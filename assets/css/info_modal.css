@@ -4,11 +4,11 @@
 
 /* Estilos personalizados para el modal de información */
 .custom-modal .modal-content {
-    border-radius: 12px;  /* Bordes redondeados suaves */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);  /* Sombra pronunciada */
-    border: 2px solid #007bff;  /* Borde azul */
-    background-color: #fff;  /* Asegura un fondo consistente */
+    border: 2px solid #0056b3;  /* Azul más oscuro para mayor contraste */
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);  /* Sombra más natural */
 }
+
 
 /* Encabezado personalizado del modal */
 .custom-header {
@@ -69,15 +69,30 @@
     box-shadow: var(--modal-shadow-offset) var(--modal-shadow-color);
 }
 
+.modal.fade.show {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.modal.fade {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+
 /* Animaciones */
 @keyframes fadeIn {
     from {
         opacity: 0;
+        transform: scale(0.95);
     }
     to {
         opacity: 1;
+        transform: scale(1);
     }
 }
+
 
 @keyframes slideUp {
     from {

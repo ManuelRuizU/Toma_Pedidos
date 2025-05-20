@@ -1,48 +1,45 @@
 // assets/js/modal.js
 
-// Almacena una instancia de Bootstrap Modal
+// assets/js/modal.js
+
+// Almacena la instancia del modal
 let infoModalInstance = null;
 
-// Mostrar la información del producto en el modal
+// 🔹 Función para mostrar la información del producto en el modal
 export function showInfo(nombre, descripcion) {
-  const modalElement = document.getElementById('info-modal');
-  const modalTitle = document.getElementById('infoModalLabel');
-  const modalBody = document.getElementById('info-modal-content');
+    const modalElement = document.getElementById('info-modal');
+    const modalTitle = document.getElementById('infoModalLabel');
+    const modalBody = document.getElementById('info-modal-content');
 
-  modalTitle.textContent = nombre;
-  modalBody.innerHTML = `<p>${descripcion}</p>`;
+    modalTitle.textContent = nombre;
+    modalBody.innerHTML = `<p>${descripcion}</p>`;
 
-  // Inicializar el modal si no está creado
-  if (!infoModalInstance) {
-    infoModalInstance = new bootstrap.Modal(modalElement, {
-      backdrop: true,
-      keyboard: true,
-    });
-  }
-
-  // Mostrar el modal
-  infoModalInstance.show();
+    // 🔹 Obtener la instancia correcta cada vez que se muestra
+    infoModalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+    infoModalInstance.show();
 }
 
-// Cerrar el modal
+// 🔹 Función para cerrar el modal correctamente
 export function closeInfoModal() {
-  const modalElement = document.getElementById('info-modal');
-  const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    const modalElement = document.getElementById('info-modal');
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
 
-  if (modalInstance) {
-    modalInstance.hide();
-  }
+    if (modalInstance) {
+        modalInstance.hide();
+    }
 }
 
-// Evento para cerrar al hacer clic fuera del contenido (opcional)
-document.addEventListener('click', function (event) {
-  const modalElement = document.getElementById('info-modal');
-  if (modalElement.classList.contains('show') && event.target === modalElement) {
-    closeInfoModal();
-  }
+// 🔹 Prevención de cierres accidentales al hacer clic fuera del contenido
+document.addEventListener('click', (event) => {
+    const modalElement = document.getElementById('info-modal');
+    if (modalElement.classList.contains('show') && event.target.closest('.modal-content') === null) {
+        if (confirm("¿Seguro que quieres cerrar este mensaje?")) {
+            closeInfoModal();
+        }
+    }
 });
 
-// Exponer al ámbito global si es necesario
+// 🔹 Exponer funciones globalmente si es necesario
 window.showInfo = showInfo;
 window.closeInfoModal = closeInfoModal;
 

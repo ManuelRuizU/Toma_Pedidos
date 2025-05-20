@@ -1,54 +1,135 @@
 /* navbar.css */
 /* NAVBAR */
+
 .navbar {
-    background-color: rgba(0, 0, 0, 0.8);  /* Fondo transparente al inicio */
-    transition: background-color 0.3s ease;  /* Transición suave para el cambio de fondo */
-    box-shadow: none;  /* Sin sombra por defecto */
-    position: fixed;  /* Fija el navbar en la parte superior */
-    width: 100%;  /* Asegura que ocupe todo el ancho */
-    top: 0;  /* Lo posiciona en la parte superior */
+    background-color: rgba(0, 0, 0, 0.8);  /* Fondo inicial transparente */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;  /* Transición mejorada */
+    box-shadow: none;
+    position: fixed;
+    width: 100%;
+    top: 0;
     left: 0;
-    z-index: 1040;  /* Asegura que esté sobre otros elementos */
+    z-index: 1040;
+    padding: 10px 15px;  /* Espaciado más compacto */
 }
 
+.menu-text {
+    color: gold;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+
+/* Fondo del navbar cuando se desplaza */
 .navbar.scrolled {
-    background-color: rgba(255, 255, 255, 0.9);  /* Fondo blanco semitransparente cuando se desplaza */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Sombra sutil cuando se desplaza */
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-.navbar-toggler-icon {
-    border: none;  /* Elimina bordes innecesarios */
-    width: 2rem;  /* Ancho del icono */
-    height: 2rem;  /* Alto del icono */
-    background-color: #ff5405;  /* Color del icono */
-    display: block;  /* Asegura que el icono sea visible */
+/* 🔹 Tamaño optimizado para los iconos de categorías */
+.categoria-img {
+    width: 50px;  /* 🔹 Reducir el tamaño del círculo */
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #ff5405;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: transform 0.2s ease-in-out; /* Animación de escala */
 }
 
+/* Animación al pasar el cursor */
+.categoria-img:hover {
+    transform: scale(1.1);
+}
+
+/* 🔹 Ajuste del tamaño de las imágenes dentro del círculo */
+.categoria-img img {
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
+}
+
+/* 🔹 Estilo del nombre de la categoría */
+.categoria-nombre {
+    font-size: 13px; /* 🔹 Ajustado para mantener visibilidad sin ocupar mucho espacio */
+    font-weight: bold;
+    color: #ff5733;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* 🔹 Estilo del botón de menú desplegable */
 .navbar-toggler {
-    padding: 0.5rem;  /* Espaciado mejorado alrededor del icono */
-    border-color: #ff5405;  /* Color del borde del toggle */
-    transition: transform 0.3s ease;  /* Transición para el botón del toggle */
+    padding: 0.4rem;
+    border: 2px solid #ff5405;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .navbar-toggler:hover {
-    transform: scale(1.1);  /* Efecto de escala al pasar el cursor */
-    background-color: #ff7d47;  /* Fondo del toggle al pasar el cursor */
+    transform: scale(1.1);
+    background-color: #ff7d47;
+}
+
+/* 🔸 Personalizar las 3 líneas del botón hamburguesa */
+.navbar-toggler-icon {
+  background-image: none;
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: gold;
+  transition: background-color 0.3s ease;
+  margin: 6px auto; /* Centra dentro del botón */
+}
+
+.navbar-toggler-icon::before,
+.navbar-toggler-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: gold;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-toggler-icon::before {
+  top: -8px;  /* Ajusta según altura total deseada */
+}
+
+.navbar-toggler-icon::after {
+  top: 8px;
+}
+
+
+.navbar.scrolled .navbar-toggler-icon,
+.navbar.scrolled .navbar-toggler-icon::before,
+.navbar.scrolled .navbar-toggler-icon::after {
+  background-color: gold; /* o el color que uses al hacer scroll */
 }
 
 
 
-/* Responsivo: en pantallas pequeñas, mostramos 2 elementos por fila */
+/* 🔹 Responsivo: en pantallas pequeñas, mejorar la distribución */
 @media (max-width: 768px) {
     #navbarCategories {
-        display: grid; /* Cambiamos a grid para controlar las columnas */
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas de igual tamaño */
-        gap: 10px; /* Espaciado entre los elementos */
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px; /* 🔹 Ajustar espacio para mejor organización */
+        justify-content: center;
     }
 
-    /* Aseguramos que los elementos no se desborden */
-    #navbarCategories .nav-item {
-        width: 100%; /* 100% dentro del grid */
+    .categoria-img {
+        width: 80px; /* 🔹 Íconos más pequeños en móviles */
+        height: 80px;
+    }
+
+    .categoria-nombre {
+        font-size: 12px; /* 🔹 Texto más compacto en móviles */
     }
 }
-
 

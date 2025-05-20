@@ -1,89 +1,178 @@
-/* 🔹 Efecto de escala más fluido en tarjetas */
-.card {
-    transition: transform 0.25s ease-in-out, box-shadow 0.3s ease;
-    padding: 6px; /* 🔹 Reducido para aprovechar más espacio */
+/* 🎯 Estilos base y estructura */
+.product-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    position: relative;
 }
 
-.card:hover {
-    transform: scale(1.04);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 🔹 Menos intenso para suavizar la elevación */
+/* 🔸 Animación en hover (solo en pantallas grandes) */
+@media (hover: hover) {
+    .product-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-image-container:hover .product-image {
+        transform: scale(1.05);
+    }
 }
 
-/* 🔹 Ajuste en la imagen de la tarjeta */
-.card-img-top {
-    width: 100%; /* 🔹 Expande en horizontal sin afectar la altura */
-    height: auto; /* 🔹 Mantiene proporciones naturales */
+/* 🔸 Imagen de producto */
+.product-image-container {
+    width: 100%;
+    height: 160px;
+    overflow: hidden;
+    position: relative;
+    background-color: #f5f5f5;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.3s ease;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
 }
 
-.card-img-top:hover {
-    transform: scale(1.06); /* 🔹 Menos agresivo para evitar distorsión */
+/* 🔸 Información del producto */
+.product-info {
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    background-color: #fff;
 }
 
-/* 🔹 Ajuste en la card-body para aprovechar espacio */
-.card-body {
-    padding: 8px; /* 🔹 Reducido para que la imagen tenga más protagonismo */
-}
-
-/* 🔹 Botón de "Agregar" con interacciones más visibles */
-.btn-primarys {
-    background: linear-gradient(90deg, #ff5405, #b303ff);
-    color: white;
-    border: none;
-    padding: 10px 20px; /* 🔹 Compactado */
-    border-radius: 8px;
-    font-size: 15px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn-primarys:hover {
-    transform: scale(1.06);
-    box-shadow: 0 3px 10px rgba(255, 84, 5, 0.3);
-}
-
-/* 🔹 Botón "Info" con mejor contraste */
-.btn-info {
-    background: linear-gradient(90deg, #0fa802, #058a02);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 15px;
-    cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn-info:hover {
-    transform: scale(1.06);
-    box-shadow: 0 3px 10px rgba(15, 168, 2, 0.3);
-}
-
-/* 🔹 Mejor interactividad en todos los botones */
-button:hover {
-    transform: scale(1.06);
-}
-
-/* 🔹 Ajustes en los textos para compactar */
-.card-title {
+/* 🔸 Nombre del producto */
+.product-name {
     font-size: 1rem;
-    margin-bottom: 5px;
+    font-weight: 600;
+    color: #222;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.card-text {
-    font-size: 0.95rem;
-    margin-bottom: 4px;
+/* 🔸 Precio y botón en fila */
+.product-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* 🔹 Botones de filtro con mejor accesibilidad */
+/* 🔸 Estilo del precio */
+.price-efectivo {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ff5405;
+}
+
+/* 🔸 Botón "Agregar" */
+.agregar-btn {
+    background: linear-gradient(90deg, #ff5405, #b303ff);
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 0.45rem 0.75rem;
+    border: none;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.agregar-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 3px 8px rgba(255, 84, 5, 0.3);
+}
+
+.agregar-btn:active {
+    transform: scale(0.98);
+}
+
+/* 🔸 Botón "Ver Info" con ícono de ojo */
+/* Contenedor del ícono con animación */
+.eye-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.eye-wrapper svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.5s ease;
+}
+
+.eye-open {
+    animation: eyeToggleOpen 7s infinite;
+}
+
+.eye-closed {
+    animation: eyeToggleClosed 7s infinite;
+}
+
+@keyframes eyeToggleOpen {
+  0%, 75% { opacity: 1; }
+  75.01%, 100% { opacity: 0; }
+}
+
+@keyframes eyeToggleClosed {
+  0%, 75% { opacity: 0; }
+  75.01%, 100% { opacity: 1; }
+}
+
+
+
+
+/* 🔸 Ajustes móviles */
+@media (max-width: 576px) {
+    .product-card {
+        border-radius: 0.75rem;
+    }
+
+    .product-image-container {
+        height: 140px;
+    }
+
+    .product-name {
+        font-size: 0.95rem;
+    }
+
+    .price-efectivo {
+        font-size: 0.95rem;
+    }
+
+    .agregar-btn {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.65rem;
+    }
+}
+
+/* 🔘 Filtros */
 .filter-button,
 #show-all-products {
     background-color: #ff5405;
     color: white;
-    border-radius: 50px;
-    padding: 10px 20px;
-    font-size: 15px;
+    border-radius: 999px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
     transition: background-color 0.3s ease, transform 0.25s ease;
 }
 
@@ -93,23 +182,10 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* 🔹 Ajuste para mejorar legibilidad en dispositivos móviles */
-@media (max-width: 768px) {
-    .card-img-top {
-        height: auto;
-    }
-
-    .btn-primarys,
-    .btn-info {
-        font-size: 14px;
-        padding: 9px 18px;
-    }
-
-    .filter-button,
-    #show-all-products {
-        padding: 9px 18px;
-        font-size: 14px;
-    }
+/* 🔍 Mejora interactividad general */
+button:hover {
+    transform: scale(1.05);
 }
+
 
 

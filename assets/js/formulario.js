@@ -17,7 +17,20 @@ export function getElements() {
     };
 }
 
-// 🔹 Función para validar campos del formulario
+// 🔹 Validación en tiempo real (Resalta campos vacíos)
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll("#pedido-formulario input, #pedido-formulario select").forEach((campo) => {
+        campo.addEventListener("blur", () => {
+            if (!campo.value.trim()) {
+                campo.classList.add("is-invalid");
+            } else {
+                campo.classList.remove("is-invalid");
+            }
+        });
+    });
+});
+
+// 🔹 Función para validar campos antes de enviar el pedido
 export function validarCampos() {
     const { nombre, telefono, direccion, tipoEntrega, metodoPago, horario, terminos } = getElements();
     const errores = [];

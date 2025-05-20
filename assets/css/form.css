@@ -4,3 +4,31 @@
     text-decoration: none;
 }
 
+#pedido-formulario {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+#pedido-formulario input,
+#pedido-formulario select,
+#pedido-formulario textarea {
+    border: 2px solid #ff5005;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#pedido-formulario input.is-invalid,
+#pedido-formulario select.is-invalid,
+#pedido-formulario textarea.is-invalid {
+    border-color: red;
+    background-color: #ffe5e5;
+}
+
+#pedido-formulario input:focus,
+#pedido-formulario select:focus,
+#pedido-formulario textarea:focus {
+    transform: scale(1.03);
+    transition: transform 0.2s ease-in-out;
+}
+

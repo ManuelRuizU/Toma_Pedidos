@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #d563ff;
+  background-color: #0D0D0D;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,3 +115,4 @@ body {
   text-align: center;
   color: #efe7e7;
 }
+

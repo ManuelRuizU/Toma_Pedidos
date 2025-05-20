@@ -50,7 +50,7 @@ function renderWheel(categorias) {
 
     // Agregar evento de clic para redirigir a la categoría
     circle.addEventListener('click', () => {
-      window.location.href = `index.html?categoria=${categoria.id}`;
+      window.location.href = `index.html?categoria=categoria-${categoria.id}`;
     });
 
     wheel.appendChild(circle);
@@ -154,3 +154,4 @@ loadData()
   })
   .catch(error => console.error('Error al cargar el archivo JSON:', error));
 
+  

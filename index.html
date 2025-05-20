@@ -25,9 +25,9 @@
         <button class="navbar-toggler rounded p-2" type="button" data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
           aria-label="Toggle navigation">
-          <img src="assets/img/logo/kamon_logo.png" alt="Logo Emprendimiento" class="rounded-circle navbar-toggler-img"
-            style="width: 30px; height: 30px;" />
+          <span class="navbar-toggler-icon"></span> <span class="menu-text">Menú</span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navbarCategories">
             <li class="nav-item dropdown">
@@ -53,7 +53,10 @@
         </div>
         <div class="modal-body custom-body" id="info-modal-content"></div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" onclick="closeInfoModal()">Cerrar</button>
+          <button type="button" class="btn btn-danger w-100 mt-2" onclick="closeInfoModal()">
+            Cerrar <i class="bi bi-x-circle"></i>
+          </button>
+
         </div>
       </div>
     </div>
@@ -229,6 +232,8 @@
     <script type="module" src="assets/js/whatsapp.js"></script>
     <script type="module" src="assets/js/formulario.js"></script>
     <script type="module" src="assets/js/horarios.js"></script>
+    <script type="module" src="assets/js/scroll-handler.js"></script>
+
 
 </body>
 

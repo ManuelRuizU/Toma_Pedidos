@@ -2,7 +2,7 @@
 /* Estilo global del cuerpo */
 body {
     font-family: Arial, sans-serif;
-    background-image: url(../img/textura5.jpg);
+    background-color: #0D0D0D;
     background-attachment: fixed;
     background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
     margin: 0; /* Elimina el margen predeterminado */
