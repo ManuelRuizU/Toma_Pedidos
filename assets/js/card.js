@@ -1,5 +1,4 @@
 
-
 import { showInfo } from './modal.js';
 import { loadData } from './data.js';
 import { renderNavbar } from './navbar.js';   
@@ -21,12 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Delegación de eventos para botones
-document.addEventListener('click', e => {
-    const infoBtn = e.target.closest('.btn-ver-info');
+// 🔹 Delegación de eventos para botones (más robusta)
+document.addEventListener('click', (e) => {
+    // Captura tanto el botón como el wrapper si el usuario hizo clic dentro del ícono animado
+    const infoBtn = e.target.closest('.btn-ver-info') || e.target.closest('.eye-wrapper');
     const cartBtn = e.target.closest('.btn-agregar-carrito');
 
     if (infoBtn) {
+        console.log("Botón de información detectado:", infoBtn.dataset.nombre, infoBtn.dataset.descripcion); // Debug
         showInfo(infoBtn.dataset.nombre, infoBtn.dataset.descripcion);
     }
 
@@ -56,7 +57,6 @@ function renderProducts(data, subcategoriaID = null) {
         categoryTitle.id = `categoria-${categoria.id}`;
         fragment.appendChild(categoryTitle);
 
-
         categoria.subcategorias.forEach(subcategoria => {
             if (!subcategoria.productos || subcategoria.productos.length === 0) return;
 
@@ -64,7 +64,6 @@ function renderProducts(data, subcategoriaID = null) {
                 const subcategoryDiv = document.createElement('div');
                 subcategoryDiv.classList.add('subcategory');
                 subcategoryDiv.id = `subcategoria-${subcategoria.id}`;
-
 
                 subcategoryDiv.innerHTML = `
                     <h5 class="text-white text-center mt-3 mb-3">${escapeHTML(subcategoria.nombre)}</h5>
@@ -108,8 +107,8 @@ function createProductCard(producto) {
                         }
                     </div>
 
-                    <div  class="d-flex justify-content-between mt-auto gap-2">
-                        <button type="button" class="btn btn-outline-primary btn-sm w-50"
+                    <div class="d-flex justify-content-between mt-auto gap-2">
+                        <button type="button" class="btn btn-outline-primary btn-sm w-50 btn-ver-info"
                             data-nombre="${escapeHTML(producto.nombre)}"
                             data-descripcion="${escapeHTML(producto.descripcion)}">
                             <span class="eye-wrapper" aria-hidden="true">
@@ -144,10 +143,8 @@ function createProductCard(producto) {
     `;
 }
 
-
-
 function escapeHTML(str) {
-    if (typeof str !== 'string') return String(str); // Solución segura
+    if (typeof str !== 'string') return String(str);
     return str.replace(/[&<>'"]/g, tag => ({
         '&': '&amp;',
         '<': '&lt;',
@@ -157,9 +154,7 @@ function escapeHTML(str) {
     }[tag]));
 }
 
-
 export { renderProducts };
-
 
 
 

@@ -11,13 +11,22 @@ export function showInfo(nombre, descripcion) {
     const modalTitle = document.getElementById('infoModalLabel');
     const modalBody = document.getElementById('info-modal-content');
 
+    if (!modalElement || !modalTitle || !modalBody) {
+        console.error("No se encontraron elementos del modal en el DOM.");
+        return;
+    }
+
     modalTitle.textContent = nombre;
     modalBody.innerHTML = `<p>${descripcion}</p>`;
 
-    // 🔹 Obtener la instancia correcta cada vez que se muestra
-    infoModalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
-    infoModalInstance.show();
+    // 🔹 Usa una instancia nueva si no existe
+    let modalInstance = bootstrap.Modal.getInstance(modalElement);
+    if (!modalInstance) {
+        modalInstance = new bootstrap.Modal(modalElement);
+    }
+    modalInstance.show();
 }
+
 
 // 🔹 Función para cerrar el modal correctamente
 export function closeInfoModal() {
