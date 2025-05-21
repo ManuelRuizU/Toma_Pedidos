@@ -57,15 +57,11 @@ export function enviarPedido() {
     const numeroWhatsApp = '56997075934';
     const mensaje = encodeURIComponent(mensajePedido);
     const esMovil = /Android|iPhone|iPad/i.test(navigator.userAgent);
-    const url = esMovil 
-        ? `whatsapp://send?phone=${numeroWhatsApp}&text=${mensaje}` 
-        : `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
+    const url = esMovil ? `whatsapp://send?phone=${numeroWhatsApp}&text=${mensaje}` : `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
 
-    // 🔹 Si está en móvil, abrir directamente la app de WhatsApp
     if (esMovil) {
         window.location.href = url;
     } else {
-        // 🔹 En PC, preguntar antes de abrir WhatsApp Web
         if (confirm("¿Quieres abrir WhatsApp para enviar tu pedido?")) {
             window.open(url, '_blank');
         } else {
