@@ -1,7 +1,6 @@
-<!-- index.html -->
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -43,56 +42,77 @@
     </nav>
   </header>
 
-  <!-- Modal Info -->
-  <div id="info-modal" class="modal fade" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header custom-header">
-          <h5 class="modal-title" id="infoModalLabel"></h5>
-          <button type="button" class="btn-close" aria-label="Cerrar" onclick="closeInfoModal()"></button>
+  <!-- Plantilla para las tarjetas de productos -->
+  <template id="productCardTemplate">
+    <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+      <div class="product-card shadow-sm rounded">
+        <div class="product-image-container">
+          <img src="" alt="" class="product-image rounded-top" loading="lazy">
         </div>
-        <div class="modal-body custom-body" id="info-modal-content"></div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger w-100 mt-2" onclick="closeInfoModal()">
-            Cerrar <i class="bi bi-x-circle"></i>
-          </button>
-
+        <div class="product-info p-2">
+          <h5 class="product-name text-truncate mb-2"></h5>
+          <div class="product-prices mb-2">
+            <div><strong>Efectivo:</strong> <span class="text-success"></span></div>
+            <div><strong>Tarjeta:</strong> <span class="text-danger"></span></div>
+          </div>
+          <div class="d-flex justify-content-between mt-auto gap-2">
+            <button type="button" class="btn btn-outline-primary btn-sm w-50 btn-ver-info">
+              <span class="eye-wrapper" aria-hidden="true">
+                <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/>
+                                    <circle cx="12" cy="12" r="3"/>
+                                </svg>
+                                <svg class="eye-closed" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="m15 18-.722-3.25"/>
+                                    <path d="M2 8a10.645 10.645 0 0 0 20 0"/>
+                                    <path d="m20 15-1.726-2.05"/>
+                                    <path d="m4 15 1.726-2.05"/>
+                                    <path d="m9 18 .722-3.25"/>
+                                </svg>
+              </span>
+            </button>
+            <button class="btn btn-primary btn-sm w-50 btn-agregar-carrito">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" 
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+                  class="lucide lucide-shopping-basket-icon lucide-shopping-basket"><path d="m15 11-1 9"/>
+                  <path d="m19 11-4-7"/><path d="M2 11h20"/><path d="m3.5 11 1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4"/>
+                  <path d="M4.5 15.5h15"/><path d="m5 11 4-7"/><path d="m9 11 1 9"/>
+                </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </template>
+
+  <!-- Plantilla para los items del carrito -->
+  <template id="cartItemTemplate">
+    <li class="cart-item">
+      <div class="item-name"></div>
+      <div class="item-price"></div>
+      <div class="item-controls">
+        <button class="btn btn-outline-primary btn-sm" onclick="updateQuantity('', -1)">-</button>
+        <span class="item-quantity"></span>
+        <button class="btn btn-outline-primary btn-sm" onclick="updateQuantity('', 1)">+</button>
+      </div>
+      <div class="item-subtotal"></div>
+    </li>
+  </template>
+
+  <!-- Main Content -->
+  <main class="container my-5 main-container">
+    <div id="products-container" class="products-container row g-3">
+      <!-- Tarjetas se inyectan aquí -->
+    </div>
+  </main>
 
   <!-- Botón del carrito -->
   <button id="cart-button" class="cart-button btn custom-orange rounded-circle" onclick="toggleCartSidebar()" aria-label="Ver carrito">
     <i class="bi bi-cart3"></i>
-  </button>
-
-  <!-- Offcanvas Filtros -->
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasFiltersLabel">Filtros</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
-    </div>
-    <div class="offcanvas-body">
-      <form id="filtersForm">
-        <div class="mb-3">
-          <label for="categoryFilter" class="form-label">Categoría</label>
-          <select id="categoryFilter" class="form-select">
-            <option value="">Todas</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="priceRange" class="form-label">Rango de precios</label>
-          <input type="range" class="form-range" id="priceRange" min="0" max="1000" step="10">
-        </div>
-        <button type="button" class="btn btn-success w-100" onclick="applyFilters()">Aplicar filtros</button>
-      </form>
-    </div>
-  </div>
-
-  <button class="btn btn-primary offcanvas-button" type="button" data-bs-toggle="offcanvas"
-    data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">
-    Filtros <i class="bi bi-funnel"></i>
   </button>
 
   <!-- Sidebar del carrito -->
@@ -102,7 +122,9 @@
       <button type="button" class="btn-close" aria-label="Cerrar" onclick="toggleCartSidebar()"></button>
     </div>
     <div class="cart-content">
-      <div id="cart-items-container"></div>
+      <ul id="cart-items-container">
+        <!-- Items del carrito se inyectan aquí -->
+      </ul>
       <div class="cart-productos mt-3">
         <p class="fw-bold">Total: $<span id="total">0.00</span></p>
       </div>
@@ -146,36 +168,80 @@
           </div>
 
           <textarea id="comentario" class="form-control" placeholder="Agrega un comentario (opcional)"></textarea>
-          
         </form>
       </div>
 
       <div id="cart-actions" class="cart-actions mt-3 d-flex justify-content-between">
-    <button class="btn btn-danger flex-grow-1 me-2" onclick="limpiarCarrito()">
-        <i class="bi bi-trash3"></i> Vaciar
-    </button>
-    <button class="btn btn-success flex-grow-1" onclick="enviarPedido()">
-        <i class="bi bi-whatsapp"></i> Enviar
-    </button>
-</div>
+        <button class="btn btn-danger flex-grow-1 me-2" onclick="limpiarCarrito()">
+          <i class="bi bi-trash3"></i> Vaciar
+        </button>
+        <button class="btn btn-success flex-grow-1" onclick="enviarPedido()">
+          <i class="bi bi-whatsapp"></i> Enviar
+        </button>
+      </div>
 
       <hr />
 
-        <div class="carrito-footer-extra">
-            <p>Retiro en local disponible en:</p>
-            <p><a href="https://www.google.com/maps/place/Sevilla+632,+Villa+España,+Angol,+Región+de+la+Araucanía" target="_blank">Sevilla 632, Villa España, Angol, Región de la Araucanía</a></p>
-            <p>Horario de atención:</p>
-            <p>Lunes a viernes: 10:00 - 19:00</p>
-            <p>Sábado: 10:00 - 14:00</p>
-            <p>Domingo: Cerrado</p> 
-        </div>
-        
-        </div>
-
+      <div class="carrito-footer-extra">
+        <p>Retiro en local disponible en:</p>
+        <p><a href="https://www.google.com/maps/place/Sevilla+632,+Villa+España,+Angol,+Región+de+la+Araucanía" target="_blank">Sevilla 632, Villa España, Angol, Región de la Araucanía</a></p>
+        <p>Horario de atención:</p>
+        <p>Lunes a viernes: 10:00 - 19:00</p>
+        <p>Sábado: 10:00 - 14:00</p>
+        <p>Domingo: Cerrado</p>
+      </div>
     </div>
   </div>
 
-  <!-- Modal Validación -->
+  <!-- Offcanvas Filtros -->
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasFiltersLabel">Filtros</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Cerrar"></button>
+    </div>
+    <div class="offcanvas-body">
+      <form id="filtersForm">
+        <div class="mb-3">
+          <label for="categoryFilter" class="form-label">Categoría</label>
+          <select id="categoryFilter" class="form-select">
+            <option value="">Todas</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="priceRange" class="form-label">Rango de precios</label>
+          <input type="range" class="form-range" id="priceRange" min="0" max="1000" step="10">
+        </div>
+        <button type="button" class="btn btn-success w-100" onclick="applyFilters()">Aplicar filtros</button>
+      </form>
+    </div>
+  </div>
+
+  <button class="btn btn-primary offcanvas-button" type="button" data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasFilters" aria-controls="offcanvasFilters">
+    Filtros <i class="bi bi-funnel"></i>
+  </button>
+  
+
+  <!-- Modal Info -->
+  <div id="info-modal" class="modal fade" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header custom-header">
+          <h5 class="modal-title" id="infoModalLabel"></h5>
+          <button type="button" class="btn-close" aria-label="Cerrar" onclick="closeInfoModal()"></button>
+        </div>
+        <div class="modal-body custom-body" id="info-modal-content"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger w-100 mt-2" onclick="closeInfoModal()">
+            Cerrar <i class="bi bi-x-circle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Fin Modal Info -->
+
+  <!-- Modal Validación WhatsApp -->
   <div class="modal fade" id="validationModal" tabindex="-1" aria-labelledby="validationModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -192,13 +258,7 @@
       </div>
     </div>
   </div>
-
-  <!-- Main Content -->
- <main class="container my-5 main-container">
-    <div id="products-container" class="products-container row g-3">
-        <!-- Cards se inyectan aquí -->
-    </div>
-</main>
+  <!--Fin Modal Validación WhatsApp -->
 
   <!-- Sección contacto -->
   <section id="contacto" class="bg-light py-4">
@@ -218,29 +278,30 @@
   </footer>
 
   <!-- Scripts -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 
-    <script type="module" src="assets/js/data.js"></script>
-    <script type="module" src="assets/js/navbar.js"></script>
-    <script type="module" src="assets/js/card.js"></script>
-    <script type="module" src="assets/js/carrito.js"></script>
-    <script type="module" src="assets/js/filtros.js" defer></script>
-    <script type="module" src="assets/js/animaciones.js"></script>
-    <script type="module" src="assets/js/modal.js"></script>
-    <script type="module" src="assets/js/whatsapp.js"></script>
-    <script type="module" src="assets/js/formulario.js"></script>
-    <script type="module" src="assets/js/horarios.js"></script>
-    <script type="module" src="assets/js/scroll-handler.js"></script>
+  <script>
+    if (!localStorage.getItem("redirected")) {
+      localStorage.setItem("redirected", "true");
+      window.location.href = "home.html";
+    }
+  </script>
 
-
+  <script type="module" src="assets/js/data.js"></script>
+  <script type="module" src="assets/js/navbar.js"></script>
+  <script type="module" src="assets/js/card.js"></script>
+  <script type="module" src="assets/js/carrito.js"></script>
+  <script type="module" src="assets/js/filtros.js" defer></script>
+  <script type="module" src="assets/js/animaciones.js"></script>
+  <script type="module" src="assets/js/modal.js"></script>
+  <script type="module" src="assets/js/whatsapp.js"></script>
+  <script type="module" src="assets/js/formulario.js"></script>
+  <script type="module" src="assets/js/horarios.js"></script>
+  <script type="module" src="assets/js/scroll-handler.js"></script>
 </body>
-
 </html>
-
-
-
 
 
 

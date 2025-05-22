@@ -127,6 +127,7 @@ function applyFilters() {
 
     // Renderizar los productos filtrados
     renderProducts({ categorias: filteredCategories });
+    
 }
 
 function showModal(message) {

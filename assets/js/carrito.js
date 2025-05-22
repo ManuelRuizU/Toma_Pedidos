@@ -69,23 +69,24 @@ async function renderCart() {
     let total = 0;
 
     // Renderizar los productos del carrito
-    carrito.forEach((item) => {
-        const subtotal = item.precio * item.quantity;
-        total += subtotal;
+    // Renderizar los productos del carrito
+carrito.forEach((item) => {
+  const subtotal = item.precio * item.quantity;
+  total += subtotal;
 
-        const cartItem = document.createElement('li');
-        cartItem.classList.add('cart-item');
-        cartItem.innerHTML = `
-            <div class="item-name">${item.nombre}</div>
-            <div class="item-price">$${item.precio.toLocaleString('es-CL')}</div>
-            <div class="item-controls">
-                <button class="btn btn-outline-primary btn-sm" onclick="updateQuantity('${item.id}', -1)">-</button>
-                <span class="item-quantity">${item.quantity}</span>
-                <button class="btn btn-outline-primary btn-sm" onclick="updateQuantity('${item.id}', 1)">+</button>
-            </div>
-            <div class="item-subtotal">$${subtotal.toLocaleString('es-CL')}</div>`;
-        cartItems.appendChild(cartItem);
-    });
+  const cartItem = document.createElement('li');
+  cartItem.classList.add('cart-item');
+  cartItem.innerHTML = `
+    <div class="item-name">${item.nombre}</div>
+    <div class="item-price">$${(item.precio || item.precioEfectivo).toLocaleString('es-CL')}</div>
+    <div class="item-controls">
+      <button class="btn btn-outline-primary btn-sm" onclick="updateQuantity('${item.id}', -1)">-</button>
+      <span class="item-quantity">${item.quantity}</span>
+      <button class="btn btn-outline-primary btn-sm" onclick="updateQuantity('${item.id}', 1)">+</button>
+    </div>
+    <div class="item-subtotal">$${subtotal.toLocaleString('es-CL')}</div>`;
+  cartItems.appendChild(cartItem);
+});
 
     // Solo si hay productos en el carrito, se evalúa el tipo de entrega
     let tipoEntregaEl = document.getElementById('tipoentrega');
@@ -130,18 +131,18 @@ function updateQuantity(id, change) {
  * @param {string} nombre El nombre del producto.
  */
 function agregarAlCarrito(id, nombre, precioEfectivo, precioTransferenciaTarjeta) {
-    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-    const existingProduct = carrito.find(item => item.id === id);
+  const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+  const existingProduct = carrito.find(item => item.id === id);
 
-    if (existingProduct) {
-        existingProduct.quantity += 1;
-    } else {
-        carrito.push({ id, nombre, quantity: 1, precioEfectivo, precioTransferenciaTarjeta });
-    }
+  if (existingProduct) {
+    existingProduct.quantity += 1;
+  } else {
+    carrito.push({ id, nombre, quantity: 1, precioEfectivo, precioTransferenciaTarjeta });
+  }
 
-    localStorage.setItem('carrito', JSON.stringify(carrito));
-    renderCart();
-    mostrarMensajeCarrito();
+  localStorage.setItem('carrito', JSON.stringify(carrito));
+  renderCart();
+  mostrarMensajeCarrito();
 }
 
 // Limpiar el carrito
