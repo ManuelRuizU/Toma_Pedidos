@@ -1,6 +1,6 @@
 // filtros.js
 import { loadData } from './data.js';
-import { renderProducts } from './card.js';
+import { renderProducts } from './productRenderer.js';
 
 let originalData = null; // Variable para almacenar los datos originales
 function renderSubcategories(categorias) {

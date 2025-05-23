@@ -1,6 +1,7 @@
-
-import { agregarAlCarrito } from './carrito.js';
+//eventListeners.js
+import { carrito } from './carrito.js';
 import { applyFilters } from './filtros.js';
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const filtersForm = document.getElementById('filtersForm');
@@ -16,6 +17,7 @@ document.addEventListener('click', (e) => {
   const cartBtn = e.target.closest('.btn-agregar-carrito');
 
   if (cartBtn) {
+    console.log("Agregando producto:", cartBtn.dataset); // 🔹 Depuración
     agregarAlCarrito(
       cartBtn.dataset.id,
       cartBtn.dataset.nombre,
@@ -24,3 +26,4 @@ document.addEventListener('click', (e) => {
     );
   }
 });
+
