@@ -160,6 +160,14 @@
             <option value="Transferencia">Transferencia</option>
           </select>
 
+<!-- 🔹 Campo que aparece solo si el usuario elige "Efectivo" -->
+<div id="montoEfectivoContainer" class="mb-3" style="display: none;">
+    <label for="montoEfectivo" class="form-label">Monto con el que pagará</label>
+    <input type="number" id="montoEfectivo" class="form-control" min="0" placeholder="Ejemplo: 20000">
+    <p id="vueltoCalculado" class="text-success fw-bold mt-2"></p>
+</div>
+
+
           <div class="form-check mb-2">
             <input type="checkbox" id="terminos" class="form-check-input" required>
             <label class="form-check-label" for="terminos">
@@ -192,6 +200,7 @@
       </div>
     </div>
   </div>
+  <!--Fin Sidebar del carrito -->
 
   <!-- Offcanvas Filtros -->
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasFilters" aria-labelledby="offcanvasFiltersLabel">
@@ -270,6 +279,7 @@
       </div>
       <div class="modal-body">
         <p id="resumenPedido"></p>
+        <p id="datosPago"></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Editar</button>

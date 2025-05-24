@@ -7,15 +7,16 @@ function showValidationModal(errores) {
     const modal = new bootstrap.Modal(modalElement);
     const modalBody = document.getElementById('validationModalBody');
 
-    modalBody.innerHTML = `
-        <strong class="text-danger"><i class="bi bi-exclamation-circle-fill"></i> Error en el formulario</strong>
-        <p class="mt-2">Por favor, completa los siguientes datos antes de enviar tu pedido:</p>
-        <ul class="list-group list-group-flush">
-            ${errores.map(error => `<li class="list-group-item text-danger">${error}</li>`).join('')}
-        </ul>
-    `;
-
-    modal.show();
+    if (errores.length > 0) {
+        modalBody.innerHTML = `
+            <strong class="text-danger"><i class="bi bi-exclamation-circle-fill"></i> Error en el formulario</strong>
+            <p class="mt-2">Por favor, completa los siguientes datos antes de enviar tu pedido:</p>
+            <ul class="list-group list-group-flush">
+                ${errores.map(error => `<li class="list-group-item text-danger">${error}</li>`).join('')}
+            </ul>
+        `;
+        modal.show();
+    }
 }
 
 // Cierra el modal con animación
