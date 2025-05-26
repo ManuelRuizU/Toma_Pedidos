@@ -1,10 +1,13 @@
 
 // utilsPedido.js
 
+// utilsPedido.js
+
 import { getElements } from './formulario.js';
+// ✅ Importa la bandera de validación de dirección y showMessage desde mapValidator.js
+import { addressValidated, showMessage } from './mapValidator.js';
 
 
-// Validar que todos los campos requeridos están completos
 /**
  * Valida el teléfono.
  * @param {string} telefono - El número de teléfono a validar.
@@ -28,14 +31,24 @@ export function validarCampos() {
     const { nombre, telefono, direccion, tipoEntrega, metodoPago, horario, terminos, montoEfectivo, total } = getElements();
     const errores = [];
 
-    // Valida los campos requeridos
+    // Valida los campos requeridos básicos
     if (!nombre.value.trim()) errores.push('Nombre');
     if (!telefono.value.trim() || !validarTelefono(telefono.value)) errores.push('Teléfono inválido');
-    if (!direccion.value.trim()) errores.push('Dirección');
     if (!tipoEntrega.value) errores.push('Método de entrega');
     if (!metodoPago.value) errores.push('Método de pago');
     if (!horario.value) errores.push('Horario de entrega');
     if (!terminos.checked) errores.push('Aceptar los términos y condiciones');
+
+    // ✅ Validación específica para la dirección de domicilio
+    if (tipoEntrega.value === 'Domicilio') {
+        if (!direccion.value.trim()) {
+            errores.push('Dirección (faltante para domicilio)');
+        } else if (!addressValidated) { // ✅ Verifica la bandera de validación de Google Maps
+            errores.push('Dirección no validada por el mapa. Por favor, haz clic en "Validar Dirección".');
+            // Opcional: También puedes mostrar un mensaje visual en el div de mensajes de dirección
+            showMessage('La dirección no ha sido validada por el mapa. Por favor, haz clic en "Validar Dirección".', 'error');
+        }
+    }
 
     // Valida el monto si se selecciona "Efectivo"
     if (metodoPago.value === "Efectivo") {
@@ -56,8 +69,7 @@ export function validarCampos() {
     return errores;
 }
 
-
-// Generar el mensaje de pedido para WhatsApp
+// Generar el mensaje de pedido para WhatsApp (sin cambios necesarios aquí para la validación)
 export function generarMensajePedido(carrito, elementos, costoEnvio = 2000) {
     if (!carrito || carrito.length === 0) {
         return "📌 No hay productos en tu carrito. Agrega algunos para realizar tu pedido. 😊";
@@ -72,22 +84,24 @@ export function generarMensajePedido(carrito, elementos, costoEnvio = 2000) {
     const totalConEnvio = totalProductos + costoEnvioCalculado;
 
     return `
-¡Hola! Soy *${elementos.nombre.value.trim()}* y quiero hacer un pedido. 😃  
+¡Hola! Soy *${elementos.nombre.value.trim()}* y quiero hacer un pedido. 😃  
 
-📍 *Dirección:* ${elementos.direccion.value.trim()}  
-📞 *Teléfono:* ${elementos.telefono.value.trim()}  
-🚚 *Entrega:* ${elementos.tipoEntrega.value}  
-💳 *Pago:* ${elementos.metodoPago.value}  
-⏰ *Horario:* ${elementos.horario.value}  
+📍 *Dirección:* ${elementos.direccion.value.trim()}  
+📞 *Teléfono:* ${elementos.telefono.value.trim()}  
+🚚 *Entrega:* ${elementos.tipoEntrega.value}  
+💳 *Pago:* ${elementos.metodoPago.value}  
+⏰ *Horario:* ${elementos.horario.value}  
 
-🛒 *Productos en el carrito:*  
+🛒 *Productos en el carrito:*  
 ${productosTexto}
 
-${elementos.tipoEntrega.value === "Domicilio" ? `📦 *Costo de envío:* $${costoEnvioCalculado.toLocaleString('es-CL')}\n` : ''}  
-💰 *Total a pagar:* $${totalConEnvio.toLocaleString('es-CL')}  
+${elementos.tipoEntrega.value === "Domicilio" ? `📦 *Costo de envío:* $${costoEnvioCalculado.toLocaleString('es-CL')}\n` : ''}  
+💰 *Total a pagar:* $${totalConEnvio.toLocaleString('es-CL')}  
 
-📝 *Comentarios:* ${elementos.comentario.value.trim() || "Sin comentarios"}  
+📝 *Comentarios:* ${elementos.comentario.value.trim() || "Sin comentarios"}  
 
-✅ ¿Confirmamos el pedido? Espero tu respuesta. 😃  
+✅ ¿Confirmamos el pedido? Espero tu respuesta. 😃  
 `;
 }
+
+

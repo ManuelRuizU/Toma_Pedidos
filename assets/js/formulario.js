@@ -1,6 +1,9 @@
 // formulario.js
+// formulario.js
 // Importa la función showValidationModal desde whatsapp_modal.js
 import { showValidationModal } from './whatsapp_modal.js';
+// ✅ Importa la función handleTipoEntregaChange desde mapValidator.js
+import { handleTipoEntregaChange } from './mapValidator.js';
 
 /**
  * Obtiene los elementos del formulario.
@@ -20,11 +23,16 @@ export function getElements() {
         montoEfectivoContainer: document.getElementById('montoEfectivoContainer'),
         vueltoCalculado: document.getElementById('vueltoCalculado'),
         total: document.getElementById('total'),
+        // ✅ Asegúrate de que estos elementos también se obtengan para que estén disponibles
+        validateAddressBtn: document.getElementById('validateAddressBtn'),
+        addressMessageDiv: document.getElementById('address-message'),
+        mapContainer: document.getElementById('map-container')
     };
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const { telefono } = getElements();
+    // Desestructuración para obtener todos los elementos necesarios
+    const { telefono, metodoPago, montoEfectivoContainer, montoEfectivo, vueltoCalculado, total, tipoEntrega } = getElements();
 
     // Agrega evento de input para evitar que se borre el prefijo +56
     telefono.addEventListener('input', function() {
@@ -33,14 +41,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Obtiene los elementos del formulario
-    const { metodoPago, montoEfectivoContainer, montoEfectivo, vueltoCalculado, total } = getElements();
-
     // Agrega evento de blur a los campos del formulario
     document.querySelectorAll("#pedido-formulario input, #pedido-formulario select").forEach((campo) => {
         campo.addEventListener("blur", () => {
-            // Resalta el campo si está vacío
-            if (!campo.value.trim()) {
+            // Resalta el campo si está vacío y es requerido
+            if (campo.value.trim() === '' && campo.required) {
                 campo.classList.add("is-invalid");
             } else {
                 campo.classList.remove("is-invalid");
@@ -73,6 +78,15 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
-});
 
+    // ✅ Llama a handleTipoEntregaChange al cargar el DOM para establecer el estado inicial
+    // Esto asegura que la visibilidad del campo de dirección y el mapa se ajuste correctamente
+    // incluso si el usuario ya tenía una opción seleccionada o si el navegador la recuerda.
+    if (tipoEntrega) {
+        handleTipoEntregaChange(); // Llama a la función importada de mapValidator.js
+        // También puedes añadir un listener aquí si quisieras alguna lógica adicional en formulario.js
+        // cuando cambia el tipo de entrega, además de lo que ya hace mapValidator.js.
+        // tipoEntrega.addEventListener('change', handleTipoEntregaChange); // Ya manejado en mapValidator.js initMap
+    }
+});
 
