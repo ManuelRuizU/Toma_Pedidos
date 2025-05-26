@@ -5,16 +5,53 @@ import { getElements } from './formulario.js';
 
 
 // Validar que todos los campos requeridos están completos
-export function validarCampos() {
-    const errores = [];
-    const elementos = getElements();
+/**
+ * Valida el teléfono.
+ * @param {string} telefono - El número de teléfono a validar.
+ * @returns {boolean} - True si el teléfono es válido, false de lo contrario.
+ */
+function validarTelefono(telefono) {
+    const numeroTelefono = telefono.replace(/^\+56 /, '');
+    const regex = /^9\d{8}$/;
+    if (regex.test(numeroTelefono)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-    if (!elementos.nombre.value.trim()) errores.push("Nombre");
-    if (!elementos.telefono.value.trim() || !/^\d+$/.test(elementos.telefono.value)) errores.push("Teléfono válido");
-    if (!elementos.direccion.value.trim()) errores.push("Dirección");
-    if (!elementos.tipoEntrega.value) errores.push("Tipo de entrega");
-    if (!elementos.metodoPago.value) errores.push("Método de pago");
-    if (!elementos.horario.value) errores.push("Horario");
+/**
+ * Valida los campos del formulario antes de enviar el pedido.
+ * @returns {array} Un arreglo con los errores encontrados.
+ */
+export function validarCampos() {
+    const { nombre, telefono, direccion, tipoEntrega, metodoPago, horario, terminos, montoEfectivo, total } = getElements();
+    const errores = [];
+
+    // Valida los campos requeridos
+    if (!nombre.value.trim()) errores.push('Nombre');
+    if (!telefono.value.trim() || !validarTelefono(telefono.value)) errores.push('Teléfono inválido');
+    if (!direccion.value.trim()) errores.push('Dirección');
+    if (!tipoEntrega.value) errores.push('Método de entrega');
+    if (!metodoPago.value) errores.push('Método de pago');
+    if (!horario.value) errores.push('Horario de entrega');
+    if (!terminos.checked) errores.push('Aceptar los términos y condiciones');
+
+    // Valida el monto si se selecciona "Efectivo"
+    if (metodoPago.value === "Efectivo") {
+        const totalValor = parseFloat(total.textContent.replace(/\./g, ""));
+        const montoIngresado = parseFloat(montoEfectivo.value);
+
+        if (!montoEfectivo.value.trim()) {
+            errores.push('Falta ingresar el monto con el que pagará');
+        } else if (isNaN(montoIngresado) || montoIngresado < totalValor) {
+            errores.push('Monto insuficiente para pagar el pedido');
+        }
+    }
+
+    // Valida que el carrito no esté vacío
+    const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    if (carrito.length === 0) errores.push('Agregar productos al carrito');
 
     return errores;
 }

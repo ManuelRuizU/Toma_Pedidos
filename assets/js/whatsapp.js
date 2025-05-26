@@ -47,7 +47,7 @@ export function enviarPedido() {
         let mensajeFinal = mensajePedido;
         if (datosPago) mensajeFinal += `\n\n${datosPago}`;
 
-        const numeroWhatsApp = '56997075934';
+        const numeroWhatsApp = '56958052262';
         const mensaje = encodeURIComponent(mensajeFinal);
         const url = `https://wa.me/${numeroWhatsApp}?text=${mensaje}`;
         

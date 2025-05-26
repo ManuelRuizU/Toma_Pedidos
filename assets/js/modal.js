@@ -1,7 +1,5 @@
 // assets/js/modal.js
 
-// assets/js/modal.js
-
 // Almacena la instancia del modal
 let infoModalInstance = null;
 
@@ -51,4 +49,5 @@ document.addEventListener('click', (event) => {
 // 🔹 Exponer funciones globalmente si es necesario
 window.showInfo = showInfo;
 window.closeInfoModal = closeInfoModal;
+
 
