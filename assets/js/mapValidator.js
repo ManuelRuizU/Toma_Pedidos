@@ -1,134 +1,149 @@
 // assets/js/mapValidator.js
 
-
-// Variables globales para el mapa y el geocodificador
 let map;
 let marker;
 let geocoder;
-// ✅ Flag para saber si la dirección ha sido validada con éxito.
 export let addressValidated = false;
-// ✅ Exporta la función showMessage para que whatsapp.js o utilsPedido.js puedan usarla
 export { showMessage };
 
-// Elementos del DOM (obtenidos directamente aquí o importados si fuera un módulo de elementos)
+const linkMapaEl = document.getElementById("linkMapa");
+if (linkMapaEl) linkMapaEl.textContent = '';
 const addressInput = document.getElementById('direccion');
+const deliveryAddressInput = document.getElementById('deliveryAddress');
 const validateAddressBtn = document.getElementById('validateAddressBtn');
 const addressMessageDiv = document.getElementById('address-message');
 const mapContainer = document.getElementById('map-container');
 const tipoEntregaSelect = document.getElementById('tipoentrega');
+const differentDeliveryAddress = document.getElementById('differentDeliveryAddress');
 
-// ✅ Exporta handleTipoEntregaChange directamente
-export function handleTipoEntregaChange() {
-    // Busca el div padre que contiene el input de dirección para ocultarlo/mostrarlo
-    // Usamos .closest('.mb-3') para encontrar el contenedor Bootstrap
-    const direccionInputGroup = addressInput ? addressInput.closest('.mb-3') : null;
-    // Busca el div padre que contiene el botón de validar para ocultarlo/mostrarlo
-    const validateButtonContainer = validateAddressBtn ? validateAddressBtn.closest('.mb-3') : null;
+let mapsLoaded = false;
 
-    if (tipoEntregaSelect && tipoEntregaSelect.value === 'Domicilio') {
-        if (direccionInputGroup) direccionInputGroup.style.display = 'block';
-        if (validateButtonContainer) validateButtonContainer.style.display = 'block';
-        if (addressInput) addressInput.required = true; // Hace el campo requerido
-
-        // Solo muestra el mapa si ya hay una dirección validada y el input tiene contenido
-        if (addressValidated && (addressInput && addressInput.value.trim())) {
-            if (mapContainer) mapContainer.style.display = 'block';
-        } else {
-            if (mapContainer) mapContainer.style.display = 'none'; // Oculta si no está validado o no hay texto
-        }
-    } else {
-        // Retiro en local o tipo de entrega no seleccionado
-        if (direccionInputGroup) direccionInputGroup.style.display = 'none';
-        if (validateButtonContainer) validateButtonContainer.style.display = 'none';
-        if (addressInput) addressInput.required = false; // Quita el requisito
-        if (mapContainer) mapContainer.style.display = 'none'; // Siempre oculta el mapa si no es a domicilio
-        showMessage('', ''); // Limpia cualquier mensaje de dirección
-        addressValidated = true; // ✅ Considera la dirección "validada" para retiro en local
-                               // Así no bloqueamos el envío de pedidos para retiro en local
-    }
+function cargarGoogleMapsAPI() {
+    if (mapsLoaded) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyDsJJmGdCZ6RWQ3ZP12NgdtKaiG43KpnHk&libraries=places&callback=initMap';
+        script.async = true;
+        script.defer = true;
+        script.onload = () => {
+            mapsLoaded = true;
+            resolve();
+        };
+        script.onerror = () => reject(new Error('Error al cargar Google Maps API'));
+        document.head.appendChild(script);
+    });
 }
 
-
-/**
- * Función de inicialización del mapa de Google.
- * Es llamada por el parámetro 'callback' en la URL de la API de Google Maps.
- * DEBE ser global (adjunta a window) porque el callback de la API no soporta módulos directamente.
- */
 window.initMap = function() {
-    // Inicializa el mapa con una vista por defecto (ej: Angol, Chile)
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
-        center: { lat: -37.7981, lng: -72.7145 } // Coordenadas de Angol, Chile
+        center: { lat: -37.7981, lng: -72.7145 }
     });
 
-    // Inicializa el geocodificador
     geocoder = new google.maps.Geocoder();
 
-    // Oculta el contenedor del mapa y el mensaje al inicio (si los elementos existen)
+    if (addressInput) {
+        const autocomplete = new google.maps.places.Autocomplete(addressInput, {
+            types: ['address'],
+            componentRestrictions: { country: 'cl' }
+        });
+        autocomplete.addListener('place_changed', () => {
+            const place = autocomplete.getPlace();
+            if (place.geometry && !differentDeliveryAddress.checked) {
+                addressInput.value = place.formatted_address;
+                geocodeAddress(place.formatted_address);
+            }
+        });
+    }
+
+    if (deliveryAddressInput) {
+        const autocomplete = new google.maps.places.Autocomplete(deliveryAddressInput, {
+            types: ['address'],
+            componentRestrictions: { country: 'cl' }
+        });
+        autocomplete.addListener('place_changed', () => {
+            const place = autocomplete.getPlace();
+            if (place.geometry && differentDeliveryAddress.checked) {
+                deliveryAddressInput.value = place.formatted_address;
+                geocodeAddress(place.formatted_address);
+            }
+        });
+    }
+
     if (mapContainer) mapContainer.style.display = 'none';
     if (addressMessageDiv) addressMessageDiv.style.display = 'none';
 
-
-    // ✅ Agrega el evento de clic al botón de validar dirección
     if (validateAddressBtn) {
         validateAddressBtn.addEventListener('click', () => {
-            const address = addressInput ? addressInput.value.trim() : '';
+            const address = differentDeliveryAddress.checked && deliveryAddressInput.value.trim()
+                ? deliveryAddressInput.value.trim()
+                : addressInput.value.trim();
             if (address) {
                 geocodeAddress(address);
             } else {
                 showMessage('Por favor, introduce una dirección para validar.', 'error');
                 if (mapContainer) mapContainer.style.display = 'none';
-                addressValidated = false; // Resetear el estado de validación
+                addressValidated = false;
             }
         });
     }
-
-    // ✅ Agrega un listener para el cambio en el tipo de entrega
-    // y llama al handler al inicio para establecer el estado correcto si ya hay un valor
-    if (tipoEntregaSelect) {
-        tipoEntregaSelect.addEventListener('change', handleTipoEntregaChange);
-        handleTipoEntregaChange();
-    }
 };
 
-/**
- * Realiza la geocodificación de una dirección.
- * Usa el Geocoder de Google Maps para convertir una dirección en coordenadas.
- * @param {string} address - La dirección a geocodificar.
- */
+export function handleTipoEntregaChange() {
+    const deliveryAddressContainer = document.getElementById('deliveryAddressContainer');
+    if (addressInput) {
+        addressInput.required = true;
+    }
+
+    if (tipoEntregaSelect.value === 'Domicilio') {
+        cargarGoogleMapsAPI().then(() => {
+            if (validateAddressBtn) validateAddressBtn.closest('.mb-3').style.display = 'block';
+            if (deliveryAddressContainer) deliveryAddressContainer.style.display = differentDeliveryAddress.checked ? 'block' : 'none';
+
+            if (addressValidated && (differentDeliveryAddress.checked ? deliveryAddressInput.value.trim() : addressInput.value.trim())) {
+                if (mapContainer) mapContainer.style.display = 'block';
+            } else {
+                if (mapContainer) mapContainer.style.display = 'none';
+                if ((differentDeliveryAddress.checked && deliveryAddressInput.value.trim()) || (!differentDeliveryAddress.checked && addressInput.value.trim())) {
+                    showMessage('Por favor, valida la dirección ingresada.', 'error');
+                }
+            }
+        }).catch((error) => {
+            showMessage('Error al cargar el mapa. Por favor, intenta de nuevo.', 'error');
+            console.error(error);
+        });
+    } else {
+        if (validateAddressBtn) validateAddressBtn.closest('.mb-3').style.display = 'none';
+        if (mapContainer) mapContainer.style.display = 'none';
+        if (deliveryAddressContainer) deliveryAddressContainer.style.display = 'none';
+        addressValidated = true;
+        showMessage('', '');
+    }
+}
+
 function geocodeAddress(address) {
     showMessage('Validando dirección...', '');
     if (mapContainer) mapContainer.style.display = 'none';
-    addressValidated = false; // Resetear antes de intentar validar
+    addressValidated = false;
 
     geocoder.geocode({ address: address }, (results, status) => {
-        if (status === 'OK') {
-            if (results[0]) {
-                const location = results[0].geometry.location;
-                if (map) { // Asegurarse de que el mapa está inicializado
-                    map.setCenter(location);
-                    map.setZoom(16);
-                }
+        if (status === 'OK' && results[0]) {
+            const location = results[0].geometry.location;
+            map.setCenter(location);
+            map.setZoom(16);
 
-                if (marker) {
-                    marker.setMap(null); // Elimina el marcador anterior
-                }
+            if (marker) marker.setMap(null);
+            marker = new google.maps.Marker({
+                map: map,
+                position: location,
+                title: results[0].formatted_address
+            });
 
-                marker = new google.maps.Marker({
-                    map: map,
-                    position: location,
-                    title: results[0].formatted_address
-                });
-
-                showMessage(`Dirección validada: ${results[0].formatted_address}`, 'success');
-                if (mapContainer) mapContainer.style.display = 'block';
-                addressValidated = true; // ✅ La dirección ha sido validada con éxito
-                if (addressInput) addressInput.value = results[0].formatted_address; // Autocompleta
-            } else {
-                showMessage('No se encontraron resultados para la dirección. Intenta ser más específico.', 'error');
-                if (mapContainer) mapContainer.style.display = 'none';
-                addressValidated = false;
-            }
+            showMessage(`Dirección validada: ${results[0].formatted_address}`, 'success');
+            if (mapContainer) mapContainer.style.display = 'block';
+            addressValidated = true;
+            const targetInput = differentDeliveryAddress.checked ? deliveryAddressInput : addressInput;
+            targetInput.value = results[0].formatted_address;
         } else {
             let errorMessage = 'Error al validar la dirección: ';
             switch (status) {
@@ -139,7 +154,7 @@ function geocodeAddress(address) {
                     errorMessage += 'Has excedido el límite de solicitudes. Intenta de nuevo más tarde.';
                     break;
                 case 'REQUEST_DENIED':
-                    errorMessage += 'La solicitud fue denegada. Verifica tu clave de API y las restricciones.';
+                    errorMessage += 'La solicitud fue denegada. Verifica tu clave de API.';
                     console.error('Google Maps Geocoding API Error:', status);
                     break;
                 case 'INVALID_REQUEST':
@@ -155,24 +170,19 @@ function geocodeAddress(address) {
     });
 }
 
-/**
- * Muestra un mensaje al usuario en el div de mensajes de dirección.
- * @param {string} msg - El mensaje a mostrar.
- * @param {string} type - El tipo de mensaje ('success' o 'error').
- */
 function showMessage(msg, type) {
     if (addressMessageDiv) {
         addressMessageDiv.textContent = msg;
-        addressMessageDiv.className = 'message'; // Limpia clases anteriores
+        addressMessageDiv.className = 'message';
         if (msg) {
             addressMessageDiv.style.display = 'block';
-            if (type) {
-                addressMessageDiv.classList.add(type);
-            }
+            if (type) addressMessageDiv.classList.add(type);
         } else {
-            addressMessageDiv.style.display = 'none'; // Oculta si el mensaje está vacío
+            addressMessageDiv.style.display = 'none';
         }
     }
 }
+
+
 
 

@@ -1,3 +1,4 @@
+/* cards.css */
 /* 🎯 Estilos base y estructura */
 .product-card {
     display: flex;
@@ -186,6 +187,8 @@
 button:hover {
     transform: scale(1.05);
 }
+
+
 
 
 
